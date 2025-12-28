@@ -6,6 +6,7 @@ import Noticias from "./pages/Noticias";
 import Login from "./pages/Login";
 import CrearNoticia from "./pages/CrearNoticias";
 import CrearTrabajo from "./pages/CrearTrabajos";
+import Perfil from "./pages/Perfil";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/adminRoute";
@@ -24,10 +25,10 @@ const App = () => {
 
       {/*Rutas protegidas */}
       <Route
-      path="/perfil"
+      path="/Perfil"
       element={
         <ProtectedRoute>
-          <perfil/>
+          <Perfil/>
         </ProtectedRoute>
       }
       />

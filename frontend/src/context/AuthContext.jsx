@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
     setToken(token);
 
     const decoded = jwtDecode(token);
-    setUsuario(decoded); // 👈 ESTO ES LO QUE FALTABA
+    setUsuario(decoded);
   };
 
   const logout = () => {

@@ -29,7 +29,7 @@ const Noticias = () => {
 
             {error && <p>{error}</p>}
 
-            {noticia.length === 0 && !error && <p>no hay trabajos</p>}
+            {noticia.length === 0 && !error && <p>no hay noticias</p>}
 
             {noticia.map((noticia)=>(
                 <div key={noticia.id}>
