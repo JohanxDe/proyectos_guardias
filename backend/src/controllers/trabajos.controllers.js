@@ -73,7 +73,7 @@ exports.editarTrabajo = async (req, res) => {
         const { id } = req.params;
         const { titulo, descripcion, imagen_url } = req.body
 
-        if (req.usuario.rol !== "admin") {
+        if (req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
         }
 
@@ -99,7 +99,7 @@ exports.eliminarTrabajo = async(req, res) => {
     try{
         const { id } = req.params
 
-        if (req.usuario.rol !== "admin") {
+        if (req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
         }
 

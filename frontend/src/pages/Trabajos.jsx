@@ -37,9 +37,10 @@ const Trabajos = () => {
 
     if(!confirmar) return;
 
-    try{
-    
+    console.log("UD a Eliminar", id);
+    console.log("TOKEN", token)
 
+    try{
       const response = await fetch(
       `http://localhost:5000/api/trabajos/${id}`,
       {
@@ -55,9 +56,9 @@ const Trabajos = () => {
       }
 
       setTrabajos(trabajos.filter((t) => t.id !== id))
-    }catch{
+    }catch (err){
       alert("no se pudo eliminar el trabajo")
-      console.error(error)
+      console.error(err)
     }
   }
 
