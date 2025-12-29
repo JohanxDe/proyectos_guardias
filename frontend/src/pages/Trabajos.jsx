@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+
+
 
 const Trabajos = () => {
   const [trabajos, setTrabajos] = useState([]);
   const [error, setError] = useState("");
+
+  const {token, usuario} =useAuth();
+  const navigate =useNavigate();
 
   useEffect(() => {
     const fetchTrabajos = async () => {
@@ -25,6 +32,39 @@ const Trabajos = () => {
     fetchTrabajos();
   }, []);
 
+  const handleEliminar = async (id) =>{
+    const confirmar = window.confirm("¿Eliminar este trabajo?");
+
+    if(!confirmar) return;
+
+    try{
+    
+
+      const response = await fetch(
+      `http://localhost:5000/api/trabajos/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+      )
+
+      if(!response.ok){
+        throw new Error();
+      }
+
+      setTrabajos(trabajos.filter((t) => t.id !== id))
+    }catch{
+      alert("no se pudo eliminar el trabajo")
+      console.error(error)
+    }
+  }
+
+  const handleEditar = (id) =>{
+    navigate(`/editar-trabajo/${id}`)
+  }
+
   return (
     <>
       <h1>Trabajos</h1>
@@ -37,6 +77,18 @@ const Trabajos = () => {
         <div key={trabajo.id}>
           <h3>{trabajo.titulo}</h3>
           <p>{trabajo.descripcion}</p>
+
+          {usuario?.role === "admin" && (
+            <>
+              <button onClick={()=> handleEditar(trabajo.id)}>
+                editar
+              </button>
+
+              <button onClick={()=> handleEliminar(trabajo.id)}>
+                eliminar
+              </button>
+            </>
+          )}
         </div>
       ))}
     </>
