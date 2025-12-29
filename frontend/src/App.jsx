@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import CrearNoticia from "./pages/CrearNoticias";
 import CrearTrabajo from "./pages/CrearTrabajos";
 import Perfil from "./pages/Perfil";
+import EditarTrabajo from "./pages/EditarTrabajo";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/adminRoute";
@@ -41,6 +42,15 @@ const App = () => {
         element={
           <AdminRoute>
             <CrearTrabajo/>
+          </AdminRoute>
+        }
+        />
+
+        <Route
+        path="/editar-trabajo/:id"
+        element={
+          <AdminRoute>
+            <EditarTrabajo/>
           </AdminRoute>
         }
         />
