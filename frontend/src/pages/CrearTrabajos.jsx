@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import TrabajoForm from "../components/trabajoForm";
 
 const CrearTrabajo = () => {
   const { token, usuario } = useAuth();
@@ -78,34 +79,20 @@ const CrearTrabajo = () => {
     <>
       <h1>Crear Trabajo</h1>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {mensaje && <p style={{ color: "green" }}>{mensaje}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Título"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-        />
-
-        <textarea
-          placeholder="Descripción"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="URL de imagen (opcional)"
-          value={imagenUrl}
-          onChange={(e) => setImagenUrl(e.target.value)}
-        />
-
-        <button type="submit" disabled={loading}>
-            {loading ? "Guardando..." : "Crear Trabajo"}
-        </button>
-      </form>
+      <TrabajoForm
+      titulo={titulo}
+      setTitulo={setTitulo}
+      descripcion={descripcion}
+      setDescripcion={setDescripcion}
+      imagenUrl={imagenUrl}
+      setImagenUrl={setImagenUrl}
+      onsubmit={handleSubmit}
+      textoBoton="Crear trabajo"
+      error={error}
+      mensaje={mensaje}
+      loading={loading}
+    />
+      
     </>
   );
 };

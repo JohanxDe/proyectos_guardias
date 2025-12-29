@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import TrabajoForm from "../components/trabajoForm";
 
 
 const EditarTrabajo = () =>{
@@ -67,27 +68,15 @@ const EditarTrabajo = () =>{
         <>
             <h1>Editar trabajo</h1>
 
-            {error && <p>{error}</p>}
-
-            <form onSubmit={handleSubmit}>
-                <input
-                type="text"
-                value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
-                placeholder="Titulo"
-                required
-            />
-
-                <textarea
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                placeholder="Descripcion"
-                required
-                />
-
-                <button type="submit">Guardar Cambios</button>
-
-            </form> 
+           <TrabajoForm
+           titulo={titulo}
+           setTitulo={setTitulo}
+           descripcion={descripcion}
+           setDescripcion={setDescripcion}
+           onsubmit={handleSubmit}
+           textoBoton="Guardar cambios"
+           error={error}
+           /> 
         </>
     );
 
