@@ -91,8 +91,7 @@ const CrearTrabajo = () => {
       error={error}
       mensaje={mensaje}
       loading={loading}
-    />
-      
+    /> 
     </>
   );
 };
