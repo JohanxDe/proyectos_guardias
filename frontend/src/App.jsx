@@ -8,6 +8,7 @@ import CrearNoticia from "./pages/CrearNoticias";
 import CrearTrabajo from "./pages/CrearTrabajos";
 import Perfil from "./pages/Perfil";
 import EditarTrabajo from "./pages/EditarTrabajo";
+import GlobalSpinner from "./components/GlobalSpinner";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/adminRoute";
@@ -15,7 +16,10 @@ import AdminRoute from "./components/adminRoute";
 const App = () => {
   return(
     <BrowserRouter>
+
+    <GlobalSpinner/>
       <Navbar/>
+      
 
       <Routes>
         <Route path="/" element={<Home/>}/>

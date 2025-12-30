@@ -5,14 +5,14 @@ const TrabajoForm = ({
     setDescripcion,
     imagenUrl,
     setImagenUrl,
-    onsubmit,
+    onSubmit,
     textoBoton,
     error,
     mensaje,
     loading
 }) => {
     return(
-        <form onSubmit={onsubmit}>
+        <form onSubmit={onSubmit}>
             {error && <p style={{color: "red"}}>{error}</p>}
             {mensaje && <p style={{color: "green"}}>{mensaje}</p>}
 

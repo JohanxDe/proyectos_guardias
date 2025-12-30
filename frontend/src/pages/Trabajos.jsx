@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useLoading from "../hooks/useLoading";
 
 
 
@@ -10,10 +11,14 @@ const Trabajos = () => {
 
   const {token, usuario} =useAuth();
   const navigate =useNavigate();
+    
+  const {loading, setLoading} = useLoading();
 
   useEffect(() => {
     const fetchTrabajos = async () => {
       try {
+
+        setLoading(true)
         const response = await fetch("http://localhost:5000/api/trabajos");
 
         const data = await response.json();
@@ -26,6 +31,8 @@ const Trabajos = () => {
         setTrabajos(data);
       } catch (err) {
         setError("Error de conexión con el servidor");
+      }finally{
+        setLoading(false);
       }
     };
 

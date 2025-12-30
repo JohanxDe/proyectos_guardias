@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TrabajoForm from "../components/trabajoForm";
+import useLoading from "../hooks/useLoading";
 
 const CrearTrabajo = () => {
   const { token, usuario } = useAuth();
@@ -12,7 +13,9 @@ const CrearTrabajo = () => {
   const [imagenUrl, setImagenUrl] = useState("");
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  
+  const {loading, setLoading} = useLoading();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +89,7 @@ const CrearTrabajo = () => {
       setDescripcion={setDescripcion}
       imagenUrl={imagenUrl}
       setImagenUrl={setImagenUrl}
-      onsubmit={handleSubmit}
+      onSubmit={handleSubmit}
       textoBoton="Crear trabajo"
       error={error}
       mensaje={mensaje}
