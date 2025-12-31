@@ -98,12 +98,14 @@ exports.editarNoticia =async (req, res) => {
 //eliminar noticia
 exports.eliminarNoticia = async (req, res) => {
 
-    if (req.usuario.role !== "admin") {
-        return res.status(403).json({ error: "Acceso denegado" });
-    }
+    
 
     try{
         const { id } = req.params;
+
+        if (req.usuario.role !== "admin") {
+        return res.status(403).json({ error: "Acceso denegado" });
+    }
 
         await pool.query("DELETE FROM noticias WHERE id = $1", [id]);
 
