@@ -14,29 +14,35 @@ const EditarTrabajo = () =>{
     const [error, setError] = useState("");
 
     //Cargar trabajo
-    useEffect(() =>{
-        const fetchTrabajos = async() => {
-            try{
-                const response = await fetch(
-                    `http://localhost:5000/api/trabajos/${id}`
-                );
+useEffect(() => {
+  const fetchTrabajos = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/trabajos/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-                const data = await response.json();
+      const data = await response.json();
 
-                if (!response.ok){
-                    setError(data.error || "Error al cargar el trabajo");
-                    return;
-                }
+      if (!response.ok) {
+        setError(data.error || "Error al cargar el trabajo");
+        return;
+      }
 
-                setTitulo(data.titulo);
-                setDescripcion(data.descripcion);
-            }catch{
-                setError("Error de conexion")
-            }
-        };
+      setTitulo(data.titulo);
+      setDescripcion(data.descripcion);
+    } catch {
+      setError("Error de conexión");
+    }
+  };
 
-        fetchTrabajos();
-    }, [id]);
+  fetchTrabajos();
+}, [id, token]);
+
 
     //Editar trabajo
     const handleSubmit = async(e) =>{
@@ -48,7 +54,7 @@ const EditarTrabajo = () =>{
                 {
                     method: "PUT",
                     headers:{
-                        "content-type" : "application/json",
+                        "Content-type" : "application/json",
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({ titulo, descripcion}),

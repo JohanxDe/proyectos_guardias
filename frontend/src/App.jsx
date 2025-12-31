@@ -8,6 +8,7 @@ import CrearNoticia from "./pages/CrearNoticias";
 import CrearTrabajo from "./pages/CrearTrabajos";
 import Perfil from "./pages/Perfil";
 import EditarTrabajo from "./pages/EditarTrabajo";
+import EditarNoticia from "./pages/EditarNoticia";
 import GlobalSpinner from "./components/GlobalSpinner";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -64,6 +65,15 @@ const App = () => {
         element={
           <AdminRoute>
             <CrearNoticia/>
+          </AdminRoute>
+        }
+        />
+
+        <Route
+        path="/editar-noticia/:id"
+        element={
+          <AdminRoute>
+            <EditarNoticia/>
           </AdminRoute>
         }
         />

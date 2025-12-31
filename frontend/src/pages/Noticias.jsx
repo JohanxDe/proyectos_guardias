@@ -62,6 +62,10 @@ const Noticias = () => {
             alert("No se puede eliminar la noticia")
         }
     }
+
+    const handleEditar = (id) => {
+        navigate(`/editar-noticia/${id}`)
+    }
     return(
         <>
             <h1>noticias</h1>
@@ -78,6 +82,10 @@ const Noticias = () => {
                         <>
                             <button onClick={()=> handleEliminar(noticia.id)}>
                                 Eliminar
+                            </button>
+
+                            <button onClick={()=> handleEditar(noticia.id)}>
+                                Editar
                             </button>
                         </>
                     )}
