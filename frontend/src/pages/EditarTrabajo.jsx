@@ -18,12 +18,7 @@ useEffect(() => {
   const fetchTrabajos = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/trabajos/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:5000/api/trabajos/${id}`
       );
 
       const data = await response.json();
