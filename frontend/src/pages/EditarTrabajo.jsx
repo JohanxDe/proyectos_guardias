@@ -67,17 +67,21 @@ useEffect(() => {
 
     return(
         <>
-            <h1>Editar trabajo</h1>
+        <div className="form-page">
+          <div className="form-card">
+                <h1 className="form-title">Editar trabajo</h1>
 
-           <TrabajoForm
-           titulo={titulo}
-           setTitulo={setTitulo}
-           descripcion={descripcion}
-           setDescripcion={setDescripcion}
-           onsubmit={handleSubmit}
-           textoBoton="Guardar cambios"
-           error={error}
-           /> 
+              <TrabajoForm
+              titulo={titulo}
+              setTitulo={setTitulo}
+              descripcion={descripcion}
+              setDescripcion={setDescripcion}
+              onsubmit={handleSubmit}
+              textoBoton="Guardar cambios"
+              error={error}
+              />
+            </div>
+          </div> 
         </>
     );
 

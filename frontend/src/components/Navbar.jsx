@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import "../styles/navbar.css";
 
@@ -6,31 +6,56 @@ const Navbar = () => {
   const { usuario, logout } = useAuth();
 
   return (
-    <nav className="navbar">
-      <div className="navbar__links">
-        <Link to="/">Home</Link>
-        <Link to="/trabajos">Trabajos</Link>
-        <Link to="/noticias">Noticias</Link>
+    <header className="navbar">
+      <div className="navbar__container">
+        {/* Logo / Home */}
+        <NavLink to="/" className="navbar__logo">
+          Guardias
+        </NavLink>
 
-        {usuario?.role === "admin" && (
-          <>
-            <Link to="/crear-trabajo">Agregar Trabajo</Link>
-            <Link to="/crear-noticia">Agregar Noticia</Link>
-            <Link to="/perfil">Perfil</Link>
-          </>
-        )}
-      </div>
+        {/* Links */}
+        <nav className="navbar__links">
+          <NavLink to="/trabajos" className="navbar__link">
+            Trabajos
+          </NavLink>
 
-      <div className="navbar__actions">
-        {!usuario ? (
-          <Link to="/login" className="navbar__login">Login</Link>
-        ) : (
-          <button onClick={logout} className="navbar__logout">
-            Cerrar sesión
-          </button>
-        )}
+          <NavLink to="/noticias" className="navbar__link">
+            Noticias
+          </NavLink>
+
+          {usuario?.role === "admin" && (
+            <>
+              <NavLink to="/crear-trabajo" className="navbar__link">
+                + Trabajo
+              </NavLink>
+
+              <NavLink to="/crear-noticia" className="navbar__link">
+                + Noticia
+              </NavLink>
+            </>
+          )}
+        </nav>
+
+        {/* Auth */}
+        <div className="navbar__auth">
+          {!usuario ? (
+            <NavLink to="/login" className="btn btn--primary">
+              Ingresar
+            </NavLink>
+          ) : (
+            <>
+              <span className="navbar__user">
+                {usuario.role === "admin" ? "Admin" : "Usuario"}
+              </span>
+
+              <button onClick={logout} className="btn btn--logout">
+                Cerrar sesión
+              </button>
+            </>
+          )}
+        </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

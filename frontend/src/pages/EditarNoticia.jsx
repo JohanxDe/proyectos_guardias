@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import NoticiasForm from "../components/NoticiasForm";
+import "../styles/form.css"
 
 const EditarNoticia = () => {
     const {id} = useParams();
@@ -65,17 +66,21 @@ const EditarNoticia = () => {
 
     return(
         <>
-            <h1>Editar noticia</h1>
+        <div className="form-page">
+            <div className="form-card">
+                <h1 className="form-title">Editar noticia</h1>
 
-            <NoticiasForm
-            titulo={titulo}
-            setTitulo={setTitulo}
-            descripcion={descripcion}
-            setDescripcion={setDescripcion}
-            onSubmit={handleSubmit}
-            textoBoton="Guardar Cambios"
-            error={error}
-            />
+                <NoticiasForm
+                titulo={titulo}
+                setTitulo={setTitulo}
+                descripcion={descripcion}
+                setDescripcion={setDescripcion}
+                onSubmit={handleSubmit}
+                textoBoton="Guardar Cambios"
+                error={error}
+                />
+            </div>
+        </div>
         </>
     )
 };

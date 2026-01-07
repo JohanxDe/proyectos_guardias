@@ -13,33 +13,39 @@ const NoticiasForm = ({
 }) => {
     return(
         <form onSubmit={onSubmit}>
-            {error && <p style={{color: "red"}}>{error}</p>}
-            {mensaje && <p style={{color: "green"}}>{mensaje}</p>}
+            {error && <div className="form-error">{error}</div>}
+            {mensaje && <div className="form-success">{mensaje}</div>}
 
-            <input 
-                type="text"
-                value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
-                placeholder="titulo"
-                required
-            />
-
-            <textarea 
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            placeholder="Descripcion"
-            ></textarea>
-
-            {setImagenUrl && (
-                <input
-                type="text"
-                placeholder="URL de la imagen"
-                value={imagenUrl}
-                onChange={(e) => setImagenUrl(e.target.value)}
+            <div className="form-group">
+                <input 
+                    type="text"
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                    placeholder="titulo"
+                    required
                 />
-            )}
+            </div>
 
-            <button type="submit" disabled={loading}>{textoBoton}</button>
+            <div className="form-group">
+                <textarea 
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                placeholder="Descripcion"
+                ></textarea>
+            </div>
+
+            <div className="form-group">
+                {setImagenUrl && (
+                    <input
+                    type="text"
+                    placeholder="URL de la imagen"
+                    value={imagenUrl}
+                    onChange={(e) => setImagenUrl(e.target.value)}
+                    />
+                )}
+            </div>
+
+            <button className="form-button " type="submit" disabled={loading}>{textoBoton}</button>
         </form>
     );
 };

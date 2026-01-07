@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TrabajoForm from "../components/trabajoForm";
 import useLoading from "../hooks/useLoading";
+import "../styles/form.css";
 
 const CrearTrabajo = () => {
   const { token, usuario } = useAuth();
@@ -80,21 +81,25 @@ const CrearTrabajo = () => {
 
   return (
     <>
-      <h1>Crear Trabajo</h1>
+    <div className="form-page">
+      <div className="form-card">
+        <h1 className="form-title">Crear Trabajo</h1>
 
-      <TrabajoForm
-      titulo={titulo}
-      setTitulo={setTitulo}
-      descripcion={descripcion}
-      setDescripcion={setDescripcion}
-      imagenUrl={imagenUrl}
-      setImagenUrl={setImagenUrl}
-      onSubmit={handleSubmit}
-      textoBoton="Crear trabajo"
-      error={error}
-      mensaje={mensaje}
-      loading={loading}
-    /> 
+          <TrabajoForm
+          titulo={titulo}
+          setTitulo={setTitulo}
+          descripcion={descripcion}
+          setDescripcion={setDescripcion}
+          imagenUrl={imagenUrl}
+          setImagenUrl={setImagenUrl}
+          onSubmit={handleSubmit}
+          textoBoton="Crear trabajo"
+          error={error}
+          mensaje={mensaje}
+          loading={loading}
+        /> 
+      </div>
+    </div>
     </>
   );
 };
