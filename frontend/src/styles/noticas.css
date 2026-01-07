@@ -1,0 +1,77 @@
+.noticias {
+  min-height: calc(100vh - 64px);
+  background-color: #020617;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.noticias__title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 24px;
+}
+
+/* Grid */
+.noticias__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.noticia-card {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+.noticia-card:hover {
+  transform: translateY(-4px);
+  border-color: #3b82f6;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Content */
+.noticia-card__content h3 {
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.noticia-card__content p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Actions */
+.noticia-card__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* Estados */
+.noticias__error {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.noticias__empty {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import "../styles/login.css"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,28 +40,38 @@ const Login = () => {
 
   return (
     <>
+  <main className="login">
+    <div className="login__card">
       <h1>Login</h1>
 
-      {error && <p>{error}</p>}
+      {error && <p className="login__error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="login__field">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPasword(e.target.value)}
-        />
+        <div className="login__field">
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPasword(e.target.value)}
+          />
+        </div>
 
-        <button type="submit">Ingresar</button>
+        <button type="submit" className="login__button">
+          Ingresar
+        </button>
       </form>
-    </>
+    </div>
+  </main>
+</>
   );
 };
 

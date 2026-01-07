@@ -1,29 +1,35 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import "../styles/navbar.css";
 
 const Navbar = () => {
-    const {usuario, logout} = useAuth();
-    console.log("Navbar usuario:", usuario);
+  const { usuario, logout } = useAuth();
 
-    return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/trabajos">Trabajos</Link>
-      <Link to="/noticias">Noticias</Link>
+  return (
+    <nav className="navbar">
+      <div className="navbar__links">
+        <Link to="/">Home</Link>
+        <Link to="/trabajos">Trabajos</Link>
+        <Link to="/noticias">Noticias</Link>
 
-      {usuario?.role === "admin" && (
-        <>
-          <Link to="/crear-trabajo">Agregar Trabajo</Link>
-          <Link to="/crear-noticia">Agregar Noticia</Link>
-          <Link to="/perfil">Perfil</Link>
-        </>
-      )}
+        {usuario?.role === "admin" && (
+          <>
+            <Link to="/crear-trabajo">Agregar Trabajo</Link>
+            <Link to="/crear-noticia">Agregar Noticia</Link>
+            <Link to="/perfil">Perfil</Link>
+          </>
+        )}
+      </div>
 
-      {!usuario ? (
-        <Link to="/login">Login</Link>
-      ) : (
-        <button onClick={logout}>Cerrar sesión</button>
-      )}
+      <div className="navbar__actions">
+        {!usuario ? (
+          <Link to="/login" className="navbar__login">Login</Link>
+        ) : (
+          <button onClick={logout} className="navbar__logout">
+            Cerrar sesión
+          </button>
+        )}
+      </div>
     </nav>
   );
 };

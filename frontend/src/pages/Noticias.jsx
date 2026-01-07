@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
+import "../styles/noticas.css"
 
 const Noticias = () => {
     const [noticia, setNoticias] = useState([]);
@@ -68,30 +69,45 @@ const Noticias = () => {
     }
     return(
         <>
-            <h1>noticias</h1>
+  <main className="noticias">
+    <h1 className="noticias__title">Noticias</h1>
 
-            {error && <p>{error}</p>}
+    {error && <p className="noticias__error">{error}</p>}
 
-            {noticia.length === 0 && !error && <p>no hay noticias</p>}
+    {noticia.length === 0 && !error && (
+      <p className="noticias__empty">No hay noticias</p>
+    )}
 
-            {noticia.map((noticia)=>(
-                <div key={noticia.id}>
-                    <h3>{noticia.titulo}</h3>
-                    <p>{noticia.descripcion}</p>
-                    {usuario?.role === "admin" &&(
-                        <>
-                            <button onClick={()=> handleEliminar(noticia.id)}>
-                                Eliminar
-                            </button>
+    <section className="noticias__grid">
+      {noticia.map((n) => (
+        <article className="noticia-card" key={n.id}>
+          <div className="noticia-card__content">
+            <h3>{n.titulo}</h3>
+            <p>{n.descripcion}</p>
+          </div>
 
-                            <button onClick={()=> handleEditar(noticia.id)}>
-                                Editar
-                            </button>
-                        </>
-                    )}
-                </div>
-            ))}
-        </>
+          {usuario?.role === "admin" && (
+            <div className="noticia-card__actions">
+              <button
+                className="btn btn--edit"
+                onClick={() => handleEditar(n.id)}
+              >
+                Editar
+              </button>
+
+              <button
+                className="btn btn--delete"
+                onClick={() => handleEliminar(n.id)}
+              >
+                Eliminar
+              </button>
+            </div>
+          )}
+        </article>
+      ))}
+    </section>
+  </main>
+</>
     );
 };
 

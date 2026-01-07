@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
+import "../styles/trabajos.css"
 
 
 
@@ -75,31 +76,45 @@ const Trabajos = () => {
 
   return (
     <>
-      <h1>Trabajos</h1>
+  <main className="trabajos">
+    <h1 className="trabajos__title">Trabajos</h1>
 
-      {error && <p>{error}</p>}
+    {error && <p className="trabajos__error">{error}</p>}
 
-      {trabajos.length === 0 && !error && <p>No hay trabajos</p>}
+    {trabajos.length === 0 && !error && (
+      <p className="trabajos__empty">No hay trabajos</p>
+    )}
 
+    <section className="trabajos__grid">
       {trabajos.map((trabajo) => (
-        <div key={trabajo.id}>
-          <h3>{trabajo.titulo}</h3>
-          <p>{trabajo.descripcion}</p>
+        <article className="trabajo-card" key={trabajo.id}>
+          <div className="trabajo-card__content">
+            <h3>{trabajo.titulo}</h3>
+            <p>{trabajo.descripcion}</p>
+          </div>
 
           {usuario?.role === "admin" && (
-            <>
-              <button onClick={()=> handleEditar(trabajo.id)}>
-                editar
+            <div className="trabajo-card__actions">
+              <button
+                className="btn btn--edit"
+                onClick={() => handleEditar(trabajo.id)}
+              >
+                Editar
               </button>
 
-              <button onClick={()=> handleEliminar(trabajo.id)}>
-                eliminar
+              <button
+                className="btn btn--delete"
+                onClick={() => handleEliminar(trabajo.id)}
+              >
+                Eliminar
               </button>
-            </>
+            </div>
           )}
-        </div>
+        </article>
       ))}
-    </>
+    </section>
+  </main>
+</>
   );
 };
 

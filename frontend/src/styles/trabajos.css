@@ -1,0 +1,112 @@
+.trabajos {
+  min-height: calc(100vh - 64px);
+  background-color: #020617;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.trabajos__title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 24px;
+}
+
+/* Grid */
+.trabajos__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.trabajo-card {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+.trabajo-card:hover {
+  transform: translateY(-4px);
+  border-color: #3b82f6;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Content */
+.trabajo-card__content h3 {
+  color: #f1f5f9;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.trabajo-card__content p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Actions */
+.trabajo-card__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* Buttons */
+.btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--edit {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.btn--edit:hover {
+  background-color: #1d4ed8;
+}
+
+.btn--delete {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.btn--delete:hover {
+  background-color: #b91c1c;
+}
+
+/* Estados */
+.trabajos__error {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.trabajos__empty {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}

@@ -1,9 +1,15 @@
+import "../styles/home.css"
+
 const Home = () => {
     return (
-        <>
-            <h1>Bienvenido</h1>
-            <p>Ultimas noticias y trabajos disponibles</p>
-        </>
+        <main className="home">
+            <section className="home__hero">
+                <h1>Sistema de gestion</h1>
+                <p>
+                    Plataforma para la administracion de trabajos
+                </p>
+            </section>
+        </main>
     );
 };
 
