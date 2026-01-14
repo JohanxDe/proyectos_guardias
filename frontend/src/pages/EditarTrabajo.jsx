@@ -44,6 +44,13 @@ useEffect(() => {
         e.preventDefault();
 
         try{
+
+          const token = localStorage.getItem("token");
+
+          if(!token){
+            setError("Sesion no valida");
+            return;
+          }
             const response = await fetch(
                 `http://localhost:5000/api/trabajos/${id}`,
                 {
