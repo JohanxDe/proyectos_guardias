@@ -1,112 +1,128 @@
-.trabajos {
-  min-height: calc(100vh - 64px);
-  background-color: #020617;
-  padding: 32px;
-  box-sizing: border-box;
-}
-
-.trabajos__title {
-  font-size: 2rem;
-  font-weight: 600;
+/* --- CONFIGURACIÓN GENERAL --- */
+/* Aseguramos que el fondo de la página coincida con el tema oscuro */
+body {
+  background-color: #0f172a; /* Slate 900: Un poco más claro que las tarjetas para contraste */
   color: #f8fafc;
-  margin-bottom: 24px;
 }
 
-/* Grid */
+.trabajos {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Título principal con degradado sutil (opcional, se ve moderno) */
+.trabajos__title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+}
+
+/* --- GRID RESPONSIVE --- */
+/* Esta es la magia: crea tantas columnas como quepan de mínimo 300px */
 .trabajos__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
 }
 
-/* Card */
+/* --- TARJETA DEL TRABAJO --- */
 .trabajo-card {
-  background-color: #020617;
+  background-color: #020617; /* Slate 950 (Mismo que tu formulario) */
   border: 1px solid #1e293b;
-  border-radius: 12px;
-
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  padding: 20px;
-  box-sizing: border-box;
-
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Efecto Hover: La tarjeta se eleva y el borde brilla */
 .trabajo-card:hover {
-  transform: translateY(-4px);
-  border-color: #3b82f6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border-color: #3b82f6; /* Borde azul al pasar el mouse */
 }
 
-/* Content */
 .trabajo-card__content h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
   color: #f1f5f9;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+  font-weight: 700;
 }
 
 .trabajo-card__content p {
-  color: #94a3b8;
+  color: #94a3b8; /* Texto gris suave para lectura cómoda */
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  
+  /* Truco para limitar el texto a 4 líneas y poner '...' si es muy largo */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* Actions */
+/* --- BOTONES DE ACCIÓN (Admin) --- */
 .trabajo-card__actions {
   display: flex;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: auto; /* Empuja los botones al final de la tarjeta */
+  padding-top: 16px;
+  border-top: 1px solid #1e293b; /* Línea separadora sutil */
 }
 
-/* Buttons */
 .btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: 6px;
+  flex: 1; /* Los botones ocupan el mismo ancho */
+  padding: 10px;
   border: none;
-  cursor: pointer;
-
-  font-size: 0.85rem;
+  border-radius: 8px;
   font-weight: 600;
-  transition: background 0.2s, transform 0.1s;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.btn:active {
-  transform: scale(0.97);
-}
-
+/* Botón Editar (Azul) */
 .btn--edit {
-  background-color: #2563eb;
-  color: #fff;
+  background-color: #1e293b;
+  color: #60a5fa;
+  border: 1px solid #3b82f6;
 }
 
 .btn--edit:hover {
-  background-color: #1d4ed8;
+  background-color: #3b82f6;
+  color: white;
 }
 
+/* Botón Eliminar (Rojo suave) */
 .btn--delete {
-  background-color: #dc2626;
-  color: #fff;
+  background-color: rgba(239, 68, 68, 0.1); /* Fondo rojo muy transparente */
+  color: #ef4444;
+  border: 1px solid transparent;
 }
 
 .btn--delete:hover {
-  background-color: #b91c1c;
+  background-color: #ef4444;
+  color: white;
 }
 
-/* Estados */
-.trabajos__error {
-  color: #fecaca;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
+/* --- ESTADOS DE CARGA Y ERROR --- */
+.trabajos__error, 
 .trabajos__empty {
+  text-align: center;
+  font-size: 1.2rem;
   color: #94a3b8;
-  font-size: 0.95rem;
+  margin-top: 50px;
+  grid-column: 1 / -1; /* Ocupa todo el ancho */
 }

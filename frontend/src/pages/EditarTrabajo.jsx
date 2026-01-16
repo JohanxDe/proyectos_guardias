@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TrabajoForm from "../components/trabajoForm";
+import "../styles/form.css";
 
 
 const EditarTrabajo = () =>{
@@ -15,6 +16,7 @@ const EditarTrabajo = () =>{
 
     //Cargar trabajo
 useEffect(() => {
+  
   const fetchTrabajos = async () => {
     try {
       const response = await fetch(
@@ -36,7 +38,7 @@ useEffect(() => {
   };
 
   fetchTrabajos();
-}, [id, token]);
+}, [id]);
 
 
     //Editar trabajo
@@ -45,18 +47,12 @@ useEffect(() => {
 
         try{
 
-          const token = localStorage.getItem("token");
-
-          if(!token){
-            setError("Sesion no valida");
-            return;
-          }
             const response = await fetch(
                 `http://localhost:5000/api/trabajos/${id}`,
                 {
                     method: "PUT",
                     headers:{
-                        "Content-type" : "application/json",
+                        "Content-Type" : "application/json",
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({ titulo, descripcion}),
@@ -83,7 +79,7 @@ useEffect(() => {
               setTitulo={setTitulo}
               descripcion={descripcion}
               setDescripcion={setDescripcion}
-              onsubmit={handleSubmit}
+              onSubmit={handleSubmit}
               textoBoton="Guardar cambios"
               error={error}
               />
