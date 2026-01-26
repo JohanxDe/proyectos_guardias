@@ -1,7 +1,17 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useEffect, useState} from "react";
 import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
+
+const isTokenExpired = (token) => {
+  try{
+    const decoded = jwtDecode(token)
+    //exp esta en seegundos, Date.now() en milisegundos
+    return decoded.exp * 1000 < Date.now()
+  }catch{
+    return true
+  }
+}
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
@@ -13,25 +23,37 @@ const AuthProvider = ({ children }) => {
     const tokenGuardado = localStorage.getItem("token");
 
     if(tokenGuardado){
-      try{
-        const decode = jwtDecode(tokenGuardado)
-        setUsuario(decode)
-      }catch{
+      if(isTokenExpired(tokenGuardado)){
         localStorage.removeItem("token")
         setToken(null)
+        setUsuario(null)
+      }else{
+        try{
+          const decode = jwtDecode(tokenGuardado)
+          setToken(tokenGuardado)
+          setUsuario(decode)
+        }catch{
+          localStorage.removeItem("token")
+          setToken(null)
+          setUsuario(null)
+        }
       }
     }
 
     setLoading(false)
   },[]);
 
-   // if (tokenGuardado) {
-     // setToken(tokenGuardado);
+  useEffect(() => {
+    if (!token) return
+    const interval = setInterval(() =>{
+      if(isTokenExpired(token)){
+        logout()
+      }
+    }, 60000)//Verifica cada minuto
 
-      //const decoded = jwtDecode(tokenGuardado);
-      //setUsuario(decoded);
-    //}
-  //}, []);
+    return() => clearInterval(interval)
+  }, [token])
+  
 
   const login = (token) => {
     localStorage.setItem("token", token);

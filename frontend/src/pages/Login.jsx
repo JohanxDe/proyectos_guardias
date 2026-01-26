@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import {API_ENDPOINTS} from "../config/api"
 import "../styles/login.css"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPasword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // 👈 CLAVE
+  const { login } = useAuth(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("")
+    setLoading(true)
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,6 +39,8 @@ const Login = () => {
 
     } catch (error) {
       setError("Error de conexión con el servidor");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -65,8 +71,8 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" className="login__button">
-          Ingresar
+        <button type="submit" className="login__button" disabled={loading}>
+          {loading ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
     </div>

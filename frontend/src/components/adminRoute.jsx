@@ -3,17 +3,14 @@ import useAuth from "../hooks/useAuth";
 
 const AdminRoute = ({ children }) => {
 
-  const { usuario } = useAuth();
+  const { usuario, loading } = useAuth();
 
-  
-  console.log("adminRoute usuario", usuario)
+  if(loading){
+    return <div>Cargando...</div>
+  }
 
   if (!usuario) {
     return <Navigate to="/login" replace />;
-  }
-
-  if (!usuario){
-    return null;
   }
 
   if (usuario.role !== "admin") {

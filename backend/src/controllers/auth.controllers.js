@@ -4,6 +4,11 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
+const sanitizarTexto = (texto) => {
+    if(typeof texto !== "string") return ""
+    return texto.trim().slice(0, 255)//limita la longitud
+}
+
 //Registro
 exports.registrarUsuario = async(req, res) => {
     try{
@@ -40,34 +45,40 @@ exports.registrarUsuario = async(req, res) => {
 };
 
 //login
-exports.login = async (req, res) =>{
-    try{
-        const {email, password} = req.body;
+exports.login = async (req, res) => {
+  try {
+    const email = sanitizarTexto(req.body.email)
+    const { password } = req.body
 
-        const result = await pool.query("SELECT * FROM admins WHERE email = $1", [email]);
-
-        if(result.rows.length === 0){
-            return res.status(400).json({error: "Credenciales incorrectas"});
-        }
-
-        const admin = result.rows[0];
-        const passwordOK = await bcrypt.compare(password, admin.password);
-
-        if(!passwordOK){
-            return res.status(400).json({error:"Credenciales incorrectas"})
-        }
-
-        const token = jwt.sign(
-            {id: admin.id, role: admin.role},
-            process.env.JWT_SECRET,
-            {expiresIn:"24h"}
-        );
-
-        res.json({message: "Login exitoso", token});
-    }catch(error){
-        res.status(500).json({error: error.message})
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email y contraseña son requeridos" })
     }
-};
+
+    const result = await pool.query("SELECT * FROM admins WHERE email = $1", [email])
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: "Credenciales incorrectas" })
+    }
+
+    const admin = result.rows[0]
+    const passwordOK = await bcrypt.compare(password, admin.password)
+
+    if (!passwordOK) {
+      return res.status(401).json({ error: "Credenciales incorrectas" })
+    }
+
+    const token = jwt.sign(
+      { id: admin.id, role: admin.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "8h" }, // Reducido a 8 horas
+    )
+
+    res.json({ message: "Login exitoso", token })
+  } catch (error) {
+    console.error("Error en login:", error)
+    res.status(500).json({ error: "Error al iniciar sesión" })
+  }
+}
 
 //perfil protegido
 
@@ -83,6 +94,7 @@ exports.obtenerPerfil = async(req, res) => {
 
         res.json(usuario.rows[0]);
     }catch(error){
-        res.status(500).json({error: error.message})
+        console.error("Error obteniendo perfil", error)
+        res.status(500).json({error: "Error al obtener perfil"})
     }
 };
