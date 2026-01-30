@@ -7,9 +7,9 @@ console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 
 
 async function createAdmin() {
-  const nombre = 'Tu Nombre';
-  const email = 'tu@correo.com';
-  const passwordPlain = 'tuPasswordSeguro';
+  const nombre = 'Johan';
+  const email = 'johan02049@gmail.com';
+  const passwordPlain = 'johan1234';
 
   const saltRounds = 10;
   const hashed = await bcrypt.hash(passwordPlain, saltRounds);
