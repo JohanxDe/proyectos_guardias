@@ -13,7 +13,7 @@ async function startServer() {
         console.log('conexion a postgres exitosa');
 
         app.listen(PORT, () => {
-            console.log(`Servidor corriendo en http://localhost:${PORT}`)
+            console.log(`Servidor corriendo en el en puerto: ${PORT}`)
         });
     }catch (err){
         console.error('error conectando a la base de datos', err);
