@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TrabajoForm from "../components/trabajoForm";
+import { API_ENDPOINTS } from "../config/api";
 import "../styles/form.css";
 
 
@@ -20,7 +21,7 @@ useEffect(() => {
   const fetchTrabajos = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/trabajos/${id}`
+        `${API_ENDPOINTS.TRABAJOS}/${id}`
       );
 
       const data = await response.json();
@@ -48,7 +49,7 @@ useEffect(() => {
         try{
 
             const response = await fetch(
-                `http://localhost:5000/api/trabajos/${id}`,
+                `${API_ENDPOINTS.TRABAJOS}/${id}`,
                 {
                     method: "PUT",
                     headers:{

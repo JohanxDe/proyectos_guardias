@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
+import { API_ENDPOINTS } from "../config/api";
 import "../styles/trabajos.css"
 
 
@@ -20,7 +21,7 @@ const Trabajos = () => {
       try {
 
         setLoading(true)
-        const response = await fetch("http://localhost:5000/api/trabajos");
+        const response = await fetch(API_ENDPOINTS.TRABAJOS);
 
         const data = await response.json();
 
@@ -50,7 +51,7 @@ const Trabajos = () => {
 
     try{
       const response = await fetch(
-      `http://localhost:5000/api/trabajos/${id}`,
+      `${API_ENDPOINTS.TRABAJOS}/${id}`,
       {
         method: "DELETE",
         headers: {

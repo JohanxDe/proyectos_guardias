@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/form.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const CrearNoticia = () => {
   const [titulo, setTitulo] = useState("");
@@ -27,7 +28,7 @@ const CrearNoticia = () => {
 
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:5000/api/noticias", {
+      const response = await fetch(API_ENDPOINTS.NOTICIAS, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

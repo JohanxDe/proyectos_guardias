@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
+import { API_ENDPOINTS } from "../config/api";
 import "../styles/noticas.css"
 
 const Noticias = () => {
@@ -17,7 +18,7 @@ const Noticias = () => {
         const fetchNoticias = async () => {
             try{
                 setLoading(true)
-                const response = await fetch("http://localhost:5000/api/noticias");
+                const response = await fetch(API_ENDPOINTS.NOTICIAS);
 
                 const data = await response.json();
 
@@ -45,7 +46,7 @@ const Noticias = () => {
 
         try{
             const response = await fetch(
-                `http://localhost:5000/api/noticias/${id}`,
+                `${API_ENDPOINTS.NOTICIAS}/${id}`,
                 {
                     method: "DELETE",
                     headers:{

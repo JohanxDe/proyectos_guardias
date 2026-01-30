@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import NoticiasForm from "../components/NoticiasForm";
+import { API_ENDPOINTS } from "../config/api";
 import "../styles/form.css"
 
 const EditarNoticia = () => {
@@ -18,7 +19,7 @@ const EditarNoticia = () => {
         const fetchNoticias = async() => {
             try{
                 const response = await fetch(
-                    `http://localhost:5000/api/noticias/${id}`
+                    `${API_ENDPOINTS.NOTICIAS}/${id}`
                 );
 
                 const data = await response.json();
@@ -44,7 +45,7 @@ const EditarNoticia = () => {
 
         try{
             const response = await fetch(
-                `http://localhost:5000/api/noticias/${id}`,
+                `${API_ENDPOINTS.NOTICIAS}/${id}`,
                 {
                     method: "PUT",
                     headers:{

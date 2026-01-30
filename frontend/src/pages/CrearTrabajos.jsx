@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TrabajoForm from "../components/trabajoForm";
 import useLoading from "../hooks/useLoading";
+import { API_ENDPOINTS } from "../config/api";
 import "../styles/form.css";
 
 const CrearTrabajo = () => {
@@ -39,7 +40,7 @@ const CrearTrabajo = () => {
 
         const token = localStorage.getItem("token")
 
-        const response = await fetch("http://localhost:5000/api/trabajos", {
+        const response = await fetch(API_ENDPOINTS.TRABAJOS, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
