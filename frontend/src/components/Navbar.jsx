@@ -12,7 +12,10 @@ const Navbar = () => {
       <div className="navbar__container">
         {/* Logo / Home */}
         <NavLink to="/" className="navbar__logo">
+        <img src="/logoSinF.png" alt="Logo empresa"className="navbar__logo-img"/>
+        <span className="navbar__logo-text">
           Guardias
+        </span>
         </NavLink>
 
         {/*Hamburguesa*/}
