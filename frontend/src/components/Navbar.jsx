@@ -14,7 +14,7 @@ const Navbar = () => {
         <NavLink to="/" className="navbar__logo">
         <img src="/logoSinF.png" alt="Logo empresa"className="navbar__logo-img"/>
         <span className="navbar__logo-text">
-          Guardias
+          JG Service
         </span>
         </NavLink>
 

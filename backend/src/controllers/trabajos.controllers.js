@@ -4,7 +4,7 @@ const pool = require("../config/db");
 //obtener todos los trabajos
 exports.obtenerTrabajos = async (req, res) => {
     try{
-        const result = await pool.query("SELECT * FROM trabajos ORDER BY id DESC")
+        const result = await pool.query("SELECT *, TO_CHAR(fecha_publicacion, 'DD-MM-YY') as fecha_formateada FROM trabajos ORDER BY id DESC")
         res.json(result.rows)
     }catch(error){
         res.status(500).json({error: error.message});
@@ -20,7 +20,16 @@ exports.crearTrabajo = async (req, res) => {
             return res.status(403).json({ error: "Acceso denegado" });
         }
 
-        const { titulo, descripcion, imagen_url } = req.body;
+        const { 
+            titulo, 
+            descripcion,
+            sueldo,
+            ubicacion,
+            latitud,
+            longitud,
+            imagen_url,
+            contacto_whatsapp
+         } = req.body;
 
         if (!titulo || !descripcion) {
             return res.status(400).json({
@@ -29,10 +38,19 @@ exports.crearTrabajo = async (req, res) => {
         }
 
         const nuevo = await pool.query(
-            `INSERT INTO trabajos (titulo, descripcion, imagen_url)
-             VALUES ($1, $2, $3)
+            `INSERT INTO trabajos (titulo, descripcion, sueldo, ubicacion, latitud, logitud, imagen_url, contacto_whatsapp)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
              RETURNING *`,
-            [titulo, descripcion, imagen_url || null]
+            [
+                titulo,
+                descripcion,
+                sueldo || null,
+                ubicacion || null,
+                latitud || null,
+                longitud || null,
+                imagen_url || null,
+                contacto_whatsapp || '+56992757448'
+            ]
         );
 
         res.json({
@@ -41,7 +59,6 @@ exports.crearTrabajo = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error crearTrabajo:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -77,7 +94,7 @@ exports.obtenerTrabajoPorId = async (req, res) =>{
 exports.editarTrabajo = async (req, res) => {
     try{
         const { id } = req.params;
-        const { titulo, descripcion, imagen_url } = req.body
+        const { titulo, descripcion, sueldo, ubicacion, latitud,longitud,imagen_url,contacto_whatsapp } = req.body
 
         if (req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
@@ -86,9 +103,9 @@ exports.editarTrabajo = async (req, res) => {
 
         const actualizado = await pool.query(
             `UPDATE trabajos
-            SET titulo = $1, descripcion = $2, imagen_url = $3
-            WHERE id = $4 RETURNING *`,
-            [titulo, descripcion, imagen_url, id]
+            SET titulo = $1, descripcion = $2, sueldo = $3, ubicacion = $4, latitud = $5, longitud = $6, imagen_url = $7, contacto_whatsapp = $8
+            WHERE id = $9 RETURNING *`,
+            [titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp, id]
         );
 
         res.json({

@@ -13,6 +13,11 @@ const CrearTrabajo = () => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [imagenUrl, setImagenUrl] = useState("");
+  const [sueldo, setSueldo] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
+  const [latitud, setLatitud] = useState("");
+  const [longitud, setLongitud] = useState("");
+  const [contacto_whatsapp, setContacto_whatsapp] = useState("56992757448");
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
 
@@ -50,6 +55,11 @@ const CrearTrabajo = () => {
             titulo,
             descripcion,
             imagen_url: imagenUrl || null,
+            sueldo: parseInt(sueldo) || 0,
+            ubicacion,
+            latitud: parseFloat(latitud) || null,
+            longitud: parseFloat(longitud) || null,
+            contacto_whatsapp: contacto_whatsapp
             }),
         });
 
@@ -67,6 +77,10 @@ const CrearTrabajo = () => {
         setTitulo("");
         setDescripcion("");
         setImagenUrl("");
+        setSueldo("");
+        setUbicacion("");
+        setLatitud("");
+        setLongitud("")
 
         // opcional: redirigir
         setTimeout(() => {
@@ -87,12 +101,14 @@ const CrearTrabajo = () => {
         <h1 className="form-title">Crear Trabajo</h1>
 
           <TrabajoForm
-          titulo={titulo}
-          setTitulo={setTitulo}
-          descripcion={descripcion}
-          setDescripcion={setDescripcion}
-          imagenUrl={imagenUrl}
-          setImagenUrl={setImagenUrl}
+          titulo={titulo} setTitulo={setTitulo}
+          descripcion={descripcion} setDescripcion={setDescripcion}
+          imagenUrl={imagenUrl} setImagenUrl={setImagenUrl}
+          sueldo={sueldo} setSueldo={setSueldo}
+          ubicacion={ubicacion} setUbicacion={setUbicacion}
+          latitud={latitud} setLatitud={setLatitud}
+          longitud={longitud} setLongitud={setLongitud}
+          contacto_whatsapp={contacto_whatsapp} setContacto_whatsapp={setContacto_whatsapp}
           onSubmit={handleSubmit}
           textoBoton="Crear trabajo"
           error={error}
