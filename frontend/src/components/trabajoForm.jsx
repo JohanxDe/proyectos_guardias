@@ -52,7 +52,7 @@ const TrabajoForm = ({
                     onChange={(e) => setLatitud(e.target.value)}
                     placeholder="-33.123"/>
                 </div>
-                <div className="form-grop">
+                <div className="form-group">
                     <label>Longitud</label>
                     <input type="text" 
                     value={longitud} 
