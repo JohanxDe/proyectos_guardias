@@ -38,7 +38,7 @@ exports.crearTrabajo = async (req, res) => {
         }
 
         const nuevo = await pool.query(
-            `INSERT INTO trabajos (titulo, descripcion, sueldo, ubicacion, latitud, logitud, imagen_url, contacto_whatsapp)
+            `INSERT INTO trabajos (titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
              RETURNING *`,
             [
