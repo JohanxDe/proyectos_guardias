@@ -51,7 +51,7 @@ const Perfil  = () => {
                         <p className="perfil-subtitle">Gestiona las publicaciones de <strong>{usuario?.nombre}</strong></p>
                     </div>
                     {/*Boton de acceso rapido*/}
-                    <button onClick={() => navigate("/publicar")} className="btn-add-fast">
+                    <button onClick={() => navigate("/crear-trabajo")} className="btn-add-fast">
                         + nuevo trabajo
                     </button>
                 </header>
