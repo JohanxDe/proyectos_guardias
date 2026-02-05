@@ -102,6 +102,18 @@ const Trabajos = () => {
                 >
                   Postular por WhatsApp
                 </a>
+
+                {/*Boton de Maps */}
+                {trabajo.latitud && trabajo.longitud &&(
+                  <a 
+                  href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-.maps"
+                  >
+                    📍 Ver ubicación
+                  </a>
+                )}
               </div>
 
               {usuario?.role === "admin" && (

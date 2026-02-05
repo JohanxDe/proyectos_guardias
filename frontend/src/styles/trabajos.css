@@ -126,3 +126,39 @@ body {
   margin-top: 50px;
   grid-column: 1 / -1; /* Ocupa todo el ancho */
 }
+
+
+/*Boton maps*/
+.trabajo-card__actions-public {
+    display: flex;
+    flex-direction: column; /* Uno sobre otro en móvil */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn--maps {
+    background-color: #ffffff;
+    color: #4285F4; /* Azul Google */
+    border: 1px solid #4285F4;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn--maps:hover {
+    background-color: #f1f3f4;
+    transform: translateY(-2px);
+}
+
+/* Si quieres que se vean lado a lado en pantallas grandes */
+@media (min-width: 768px) {
+    .trabajo-card__actions-public {
+        flex-direction: row;
+    }
+    .btn--whatsapp, .btn--maps {
+        flex: 1;
+    }
+}
