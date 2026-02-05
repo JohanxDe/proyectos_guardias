@@ -63,10 +63,6 @@ const Navbar = () => {
               </NavLink>
             ) : (
               <>
-                <span className="navbar__user">
-                  {usuario.role === "admin" ? "Admin" : "Usuario"}
-                </span>
-
                 <button onClick={logout} className="btn btn--logout">
                   Cerrar sesión
                 </button>

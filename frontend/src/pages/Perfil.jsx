@@ -81,7 +81,7 @@ const Perfil  = () => {
                                         <div className="tabla-acciones">
                                             <button
                                             className="btn-action edit"
-                                            onClick={()=>navigate(`/editar/${trabajo.id}`)}
+                                            onClick={()=>navigate(`/editar-trabajo/${trabajo.id}`)}
                                             title="editar"
                                             >
                                                 ✏️
