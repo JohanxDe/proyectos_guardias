@@ -109,7 +109,7 @@ const Trabajos = () => {
                   href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn btn-.maps"
+                  className="btn btn--maps"
                   >
                     📍 Ver ubicación
                   </a>

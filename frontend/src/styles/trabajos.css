@@ -162,3 +162,97 @@ body {
         flex: 1;
     }
 }
+
+/* --- BUSCADOR --- */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 20px;
+  border-radius: 12px; /* Redondeado igual a tus botones */
+  border: 1px solid #1e293b;
+  background-color: #020617; /* Slate 950 como la tarjeta */
+  color: #f8fafc;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* --- INFO DE TRABAJO (Sueldo/Ubicación) --- */
+.trabajo-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.trabajo-card__info span {
+  background: #1e293b;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+}
+
+/* --- BOTONES PÚBLICOS --- */
+.trabajo-card__public-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px; /* Espacio antes de la línea de admin */
+}
+
+.btn--whatsapp, .btn--maps {
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.btn--whatsapp {
+  background-color: #25d366;
+  color: #ffffff !important;
+}
+
+.btn--whatsapp:hover {
+  background-color: #128c7e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+}
+
+.btn--maps {
+  background-color: #ef4444; /* Rojo para el pin */
+  color: #ffffff !important;
+}
+
+.btn--maps:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Ajuste responsive para botones lado a lado */
+@media (min-width: 600px) {
+  .trabajo-card__public-links {
+    flex-direction: row;
+  }
+  .btn--whatsapp, .btn--maps {
+    flex: 1;
+  }
+}
