@@ -40,6 +40,10 @@ const Navbar = () => {
 
             {usuario?.role === "admin" && (
               <>
+                <NavLink to="/perfil" className="navbar__link navbar__link--admin" onClick={() => setOpen(false)}>
+                  Administracion
+                </NavLink>
+
                 <NavLink to="/crear-trabajo" className="navbar__link" onClick={()=> setOpen(false)}>
                   + Trabajo
                 </NavLink>

@@ -160,3 +160,13 @@
   align-items: center;
   align-self: center; /* Centra verticalmente en el nav */
 }
+
+/*Boton Admin.*/
+.navbar__link--admin {
+  color: #60a5fa !important; /* Un azul más brillante */
+  font-weight: bold;
+}
+
+.navbar__link--admin:hover {
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}

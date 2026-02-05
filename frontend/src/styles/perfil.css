@@ -1,0 +1,78 @@
+.perfil-page {
+    padding: 40px 20px;
+    background-color: #0f172a;
+    min-height: 100vh;
+}
+
+.perfil-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.perfil-subtitle {
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+.btn-add-fast {
+    background-color: #3b82f6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tabla-wrapper {
+    background-color: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.perfil-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f8fafc;
+}
+
+.perfil-tabla th {
+    background-color: #1e293b;
+    padding: 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.perfil-tabla td {
+    padding: 15px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.td-titulo { font-weight: bold; color: #60a5fa; }
+
+.tabla-acciones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-action {
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-action.edit:hover { border-color: #3b82f6; background: #3b82f620; }
+.btn-action.delete:hover { border-color: #ef4444; background: #ef444420; }
