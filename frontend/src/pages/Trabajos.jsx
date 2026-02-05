@@ -85,7 +85,6 @@ const Trabajos = () => {
               <div className="trabajo-card__content">
                 <h3>{trabajo.titulo}</h3>
                 
-                {/* Mostramos los nuevos datos */}
                 <div className="trabajo-card__info">
                    <span>📍 {trabajo.ubicacion}</span>
                    <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
@@ -93,33 +92,35 @@ const Trabajos = () => {
 
                 <p>{trabajo.descripcion}</p>
 
-                {/* BOTÓN DE WHATSAPP AUTOMÁTICO */}
-                <a 
-                  href={`https://wa.me/${trabajo.contacto_whatsapp}?text=Hola! Me interesa la vacante de ${encodeURIComponent(trabajo.titulo)}.`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn--whatsapp"
-                >
-                  Postular por WhatsApp
-                </a>
-
-                {/*Boton de Maps */}
-                {trabajo.latitud && trabajo.longitud &&(
+                {/* BOTÓN DE WHATSAPP*/}
+                <div className="trabajo-card__public-links">
                   <a 
-                  href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn--maps"
+                    href={`https://wa.me/${trabajo.contacto_whatsapp}?text=Hola! Me interesa la vacante de ${encodeURIComponent(trabajo.titulo)}.`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-public btn--whatsapp"
                   >
-                    📍 Ver ubicación
+                    Postular por WhatsApp
                   </a>
-                )}
+
+                  {/*Boton de Maps */}
+                  {trabajo.latitud && trabajo.longitud &&(
+                    <a 
+                    href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-public btn--maps"
+                    >
+                      📍 Ver ubicación
+                    </a>
+                  )}
+                </div>
               </div>
 
               {usuario?.role === "admin" && (
                 <div className="trabajo-card__actions">
-                  <button className="btn btn--edit" onClick={() => handleEditar(trabajo.id)}>Editar</button>
-                  <button className="btn btn--delete" onClick={() => handleEliminar(trabajo.id)}>Eliminar</button>
+                  <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>Editar</button>
+                  <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>Eliminar</button>
                 </div>
               )}
             </article>
