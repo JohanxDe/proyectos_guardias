@@ -105,57 +105,64 @@
   background-color: rgba(248, 113, 113, 0.1);
 }
 /*Movile*/
-
 @media(max-width: 768px){
   .navbar__toggle{
     display: block;
   }
 
-  .navbar__menu{
+  /* Contenedor principal del menú desplegable */
+  .navbar__menu {
     position: absolute;
     top: 70px;
-    width:100%;
     left: 0;
+    width: 100%;
     background-color: #020617;
-    border-top: 1px solid #1e293b;
     border-bottom: 1px solid #1e293b;
-    flex-direction: column;
+    display: none; 
+    flex-direction: column; 
     padding: 24px;
-    display: none;
-    border: 0;
     z-index: 999;
 
+    /* Control de altura para evitar que se salga de la pantalla */
     max-height: calc(100vh - 70px);
     overflow-y: auto;
     overflow-x: hidden;
   }
 
-  .navbar__menu.is-open{
-    display: flex;
+  .navbar__menu.is-open {
+    display: flex; /* Se muestra al abrir */
   }
 
-  .navbar__link{
-    flex-direction: column !important;
+  /* cambia el contenedor de los links a columna */
+  .navbar__links {
+    flex-direction: column;
     align-items: center;
-    width: 100%;
     gap: 10px;
+    width: 100%;
   }
 
-  .navbar__link{
+  /* Estilo de cada link para que sea fácil de tocar */
+  .navbar__link {
     font-size: 1.1rem;
     text-align: center;
-    padding: 10px 0;
+    padding: 12px 0;
     width: 100%;
     display: block;
   }
 
-  .navbar__auth{
-    margin-top: 20px;
+  /* Sección de cerrar sesión */
+  .navbar__auth {
+    margin-top: 15px;
     padding-top: 20px;
     border-top: 1px solid #1e293b;
     flex-direction: column;
     width: 100%;
-    gap: 12px;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .btn--logout {
+    max-width: 250px;
   }
 }
 /*tamaño de ico */
