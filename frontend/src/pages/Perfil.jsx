@@ -32,7 +32,7 @@ const Perfil  = () => {
         try{
             const response = await fetch(`${API_ENDPOINTS.TRABAJOS}/${id}`,{
                 method: "DELETE",
-                headers: {Authorization: `Bearer${token}`}
+                headers: { Authorization: `Bearer ${token}` }
             });
             if(response.ok){
                 setTrabajos(trabajos.filter(t => t.id !==id));
