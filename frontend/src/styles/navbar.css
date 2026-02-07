@@ -120,13 +120,14 @@
     border-top: 1px solid #1e293b;
     border-bottom: 1px solid #1e293b;
     flex-direction: column;
-    padding: 20px;
+    padding: 24px;
     display: none;
     border: 0;
     z-index: 999;
 
     max-height: calc(100vh - 70px);
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .navbar__menu.is-open{
@@ -134,16 +135,18 @@
   }
 
   .navbar__link{
-    flex-direction: column;
+    flex-direction: column !important;
     align-items: center;
     width: 100%;
-    gap: 12px;
+    gap: 10px;
   }
 
   .navbar__link{
     font-size: 1.1rem;
     text-align: center;
     padding: 10px 0;
+    width: 100%;
+    display: block;
   }
 
   .navbar__auth{
