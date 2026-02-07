@@ -22,6 +22,7 @@ const loginLimiter = rateLimit({
 //rutas publicas
 router.post("/register", registrarUsuario, verificarAdmin, verificarToken);
 router.post("/login",loginLimiter, login);
+router.post('registro-admin', authController.registroAdmin)
 
 //rutas protegidas
 router.get("/perfil", verificarToken, obtenerPerfil);

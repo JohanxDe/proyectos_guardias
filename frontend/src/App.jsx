@@ -9,6 +9,7 @@ import CrearTrabajo from "./pages/CrearTrabajos";
 import Perfil from "./pages/Perfil";
 import EditarTrabajo from "./pages/EditarTrabajo";
 import EditarNoticia from "./pages/EditarNoticia";
+import NuevoAdmin from "./pages/NuevoAdmin";
 import GlobalSpinner from "./components/GlobalSpinner";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -41,6 +42,15 @@ const App = () => {
 
 
         {/*Solo admins */}
+
+        <Route
+          path="/nuevo-admin"
+          element={
+            <AdminRoute>
+              <NuevoAdmin />
+            </AdminRoute>
+          }
+        />
 
         <Route
         path="/crear-trabajo"

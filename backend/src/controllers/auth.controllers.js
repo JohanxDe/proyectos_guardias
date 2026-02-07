@@ -1,6 +1,7 @@
 const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {enviarNotificacionNurvoAdmin} = require("../utils/mailer")
 
 require("dotenv").config();
 
@@ -8,6 +9,57 @@ const sanitizarTexto = (texto) => {
     if(typeof texto !== "string") return ""
     return texto.trim().slice(0, 255)//limita la longitud
 }
+
+// Registro mejorado con envío de Email
+exports.registrarUsuario = async(req, res) => {
+    try {
+        const { nombre, email, password, role } = req.body;
+
+        // Validación de datos
+        if(!nombre || !email || !password){
+            return res.status(400).json({error: "Faltan datos obligatorios"})
+        };
+
+        // 1. Verificar si ya existe
+        const usuarioExistente = await pool.query(
+            "SELECT * FROM admins WHERE email = $1",
+            [email]
+        );
+
+        if(usuarioExistente.rows.length > 0){
+            return res.status(400).json({error: "El email ya está registrado"});
+        }
+
+        // 2. Hashear la contraseña
+        const passwordHash = await bcrypt.hash(password, 10)
+
+        // 3. Insertar en la Base de Datos
+        const usuarioNuevo = await pool.query(
+            `INSERT INTO admins (nombre, email, password, role)
+            VALUES ($1, $2, $3, $4) RETURNING id, nombre, email, role`,
+            [nombre, email, passwordHash, role || "admin"]
+        );
+
+        // 4. ✅ ENVIAR CORREO (Solo si la inserción fue exitosa)
+        // Usamos await para asegurarnos de capturar errores de envío si los hay
+        try {
+            await enviarNotificacionNuevoAdmin(nombre, email);
+        } catch (mailError) {
+            console.error("Usuario creado pero el correo falló:", mailError);
+            // No bloqueamos la respuesta al cliente, el usuario ya se creó
+        }
+
+        res.json({
+            message: "Usuario registrado con éxito y notificación enviada",
+            usuario: usuarioNuevo.rows[0]
+        });
+
+    } catch(error) {
+        console.error("Error en registro:", error);
+        res.status(500).json({ error: error.message});
+    }
+};
+
 
 //Registro
 exports.registrarUsuario = async(req, res) => {
