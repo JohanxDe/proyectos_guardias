@@ -2,10 +2,19 @@ const nodemailer = require('nodemailer');
 
 // Configuración del transportador (Usando Gmail como ejemplo)
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS // No es tu clave normal, es una generada por Google
+  },
+  connectionTimeout: 10000, // Esperar hasta 10 segundos
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
+  dnsLookup: (hostname, options, callback) => {
+    // Forzamos a que busque la dirección IPv4 (familia 4)
+    require('dns').lookup(hostname, { family: 4 }, callback);
   }
 });
 
