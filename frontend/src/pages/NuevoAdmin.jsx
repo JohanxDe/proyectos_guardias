@@ -25,7 +25,7 @@ const NuevoAdmin = () => {
         }
 
         try {
-            const response = await fetch(`${API_ENDPOINTS.AUTH}/registro-admin`, {
+            const response = await fetch(API_ENDPOINTS.AUTH.REGISTRO_ADMIN, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(datos)
