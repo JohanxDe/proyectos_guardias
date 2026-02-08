@@ -27,9 +27,11 @@ const enviarNotificacionNuevoAdmin = async (nombre, emailAdmin) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Correo enviado con éxito a: " + emailAdmin);
+    console.log("Correo enviado con éxito a:", info.messageId);
+    return info;
   } catch (error) {
     console.error("Error al enviar el correo:", error);
+    throw
   }
 };
 

@@ -62,40 +62,6 @@ exports.registrarUsuario = async(req, res) => {
 };
 
 
-//Registro
-exports.registrarUsuario = async(req, res) => {
-    try{
-        const {nombre, email, password, role} = req.body;
-
-        if(!nombre || !email || !password){
-            return res.status(400).json({error: "faltan datos obligatorios"})
-        };
-
-        const usuarioExistente = await pool.query(
-            "SELECT * FROM admins WHERE email = $1",
-            [email]
-        );
-
-        if(usuarioExistente.rows.length > 0){
-            return res.status(400).json({error: "El email ya esta registrado"});
-        }
-
-        const passwordHash = await bcrypt.hash(password, 10)
-
-        const usuarioNuevo = await pool.query(
-        `INSERT INTO admins (nombre, email, password, role)
-        VALUES ($1, $2, $3, $4) RETURNING id, nombre, email, role`,
-        [nombre, email, passwordHash, role || "admin"]
-        );
-
-        res.json({
-            message: "Usuario Registrado con exito",
-            usuario: usuarioNuevo.rows[0]
-        });
-    }catch(error){
-        res.status(500).json({ error: error.message});
-    }
-};
 
 //login
 exports.login = async (req, res) => {
