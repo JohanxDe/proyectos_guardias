@@ -10,6 +10,7 @@ import Perfil from "./pages/Perfil";
 import EditarTrabajo from "./pages/EditarTrabajo";
 import EditarNoticia from "./pages/EditarNoticia";
 import NuevoAdmin from "./pages/NuevoAdmin";
+import TrabajoDetalle from "./pages/TrabajoDetalle";
 import GlobalSpinner from "./components/GlobalSpinner";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -26,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="trabajos" element={<Trabajos/>}/>
+        <Route path="/trabajo/:id" element={<TrabajoDetalle />} />
         <Route path="noticias" element={<Noticias/>}/>
         <Route path="login" element={<Login/>}/>
 

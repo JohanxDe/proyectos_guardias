@@ -86,11 +86,21 @@ const Trabajos = () => {
                 <h3>{trabajo.titulo}</h3>
                 
                 <div className="trabajo-card__info">
-                   <span>📍 {trabajo.ubicacion}</span>
-                   <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
+                  <span>📍 {trabajo.ubicacion}</span>
+                  <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
                 </div>
 
-                <p>{trabajo.descripcion}</p>
+                <p className="trabajo-card__description">
+                  {trabajo.descripcion.substring(0, 100)}...
+                </p>
+
+                {/* BOTÓN DE VER OFERTA COMPLETA */}
+                <button
+                  className="btn-ver-mas"
+                  onClick={() => navigate(`/trabajo/${trabajo.id}`)}
+                >
+                  Ver oferta completa 🔍
+                </button>
 
                 {/* BOTÓN DE WHATSAPP*/}
                 <div className="trabajo-card__public-links">
@@ -105,11 +115,11 @@ const Trabajos = () => {
 
                   {/*Boton de Maps */}
                   {trabajo.latitud && trabajo.longitud &&(
-                    <a 
-                    href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-public btn--maps"
+                    <a
+                      href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-public btn--maps"
                     >
                       📍 Ver ubicación
                     </a>
