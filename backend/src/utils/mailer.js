@@ -19,7 +19,9 @@ const transporter = nodemailer.createTransport({
   greetingTimeout: 10000,
   socketTimeout: 10000,
   dnsLookup: (hostname, options, callback) => {
-    dns.lookup(hostname, { family: 4 }, callback);
+    dns.lookup(hostname, { family: 4 }, (err, address, family) => {
+      callback(err, address, family);
+    });
   }
 });
 
