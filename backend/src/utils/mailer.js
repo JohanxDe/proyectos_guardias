@@ -6,8 +6,8 @@ const enviarNotificacionNuevoAdmin = async (nombreNuevoAdmin, emailNuevoAdmin) =
   try {
     const { data, error } = await resend.emails.send({
       from: 'JG Service <onboarding@resend.dev>',
-      // ✅ CAMBIO CLAVE: Aquí pones TU correo personal (el que registraste en Resend)
-      to: 'tu-correo-registrado-en-resend@gmail.com', 
+      
+      to: 'johan020497@gmail.com', 
       subject: '🔔 Alerta: Nuevo Administrador Registrado',
       html: `
         <div style="font-family: sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; border-radius: 10px;">
