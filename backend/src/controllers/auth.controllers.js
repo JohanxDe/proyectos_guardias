@@ -14,6 +14,7 @@ const sanitizarTexto = (texto) => {
 exports.registrarUsuario = async(req, res) => {
     try {
         const { nombre, email, password, role } = req.body;
+        console.log("Iniciando registro para:", email);
 
         // Validación de datos
         if(!nombre || !email || !password){
