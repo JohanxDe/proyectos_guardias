@@ -22,13 +22,19 @@
 }
 
 .btn-add-fast {
-    background-color: #3b82f6;
+    background-color: #1e293b; /* Igual a tus tarjetas y th */
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
     border: none;
     font-weight: bold;
     cursor: pointer;
+}
+
+.btn-add-fast:hover {
+    background-color: #334155;
+    border-color: #60a5fa;
+    color: #60a5fa;
 }
 
 .tabla-wrapper {
@@ -81,11 +87,12 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 /* Estilo para el botón de nuevo Admin */
 .btn-admin-config {
-    background-color: #1e293b; /* Igual a tus tarjetas y th */
+    background-color: #1e293b;
     color: #f8fafc;
     padding: 10px 20px;
     border-radius: 8px;
@@ -97,11 +104,44 @@
 
 .btn-admin-config:hover {
     background-color: #334155;
-    border-color: #60a5fa; /* Resalta en el azul claro de tus títulos */
+    border-color: #60a5fa; 
     color: #60a5fa;
 }
 
 /* Opcional: Si quieres que el botón sea un poco más pequeño que el principal */
 .btn-admin-config {
     font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .perfil-header {
+        flex-direction: column; /* 🚀 Apila el título sobre los botones */
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .perfil-actions-group {
+        width: 100%;
+        justify-content: space-between; /* Separa los botones a los extremos */
+    }
+
+    .btn-admin-config, 
+    .btn-add-fast {
+        flex: 1; /* 🚀 Hace que ambos botones ocupen el mismo ancho */
+        text-align: center;
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Ajuste extra para la tabla en móviles */
+@media (max-width: 600px) {
+    .tabla-wrapper {
+        overflow-x: auto; /* 🚀 Permite scroll horizontal si la tabla es muy ancha */
+    }
+    
+    .perfil-tabla th, .perfil-tabla td {
+        padding: 10px 5px;
+        font-size: 0.8rem;
+    }
 }
