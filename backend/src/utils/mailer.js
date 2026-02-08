@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns');
 
 // Configuración del transportador (Usando Gmail como ejemplo)
 const transporter = nodemailer.createTransport({
-  host: '74.125.124.108',
-  port: 465,
-  secure: true,
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   servername:'smtp.gmail.com',
   auth: {
     user: process.env.EMAIL_USER,
@@ -17,6 +18,9 @@ const transporter = nodemailer.createTransport({
   connectionTimeout: 10000, // Esperar hasta 10 segundos
   greetingTimeout: 10000,
   socketTimeout: 10000,
+  dnsLookup: (hostname, options, callback) => {
+    dns.lookup(hostname, { family: 4 }, callback);
+  }
 });
 
 const enviarNotificacionNuevoAdmin = async (nombre, emailAdmin) => {
