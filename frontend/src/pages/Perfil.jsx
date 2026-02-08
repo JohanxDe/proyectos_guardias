@@ -50,10 +50,23 @@ const Perfil  = () => {
                         <h1>Panel de control</h1>
                         <p className="perfil-subtitle">Gestiona las publicaciones de <strong>{usuario?.nombre}</strong></p>
                     </div>
-                    {/*Boton de acceso rapido*/}
-                    <button onClick={() => navigate("/crear-trabajo")} className="btn-add-fast">
-                        + nuevo trabajo
-                    </button>
+                    <div className="perfil-actions-group">
+                        {/* Botón secundario */}
+                        <button
+                            onClick={() => navigate("/nuevo-admin")}
+                            className="btn-admin-config"
+                        >
+                            👤 + Admin
+                        </button>
+
+                        {/* Tu botón principal azul */}
+                        <button
+                            onClick={() => navigate("/crear-trabajo")}
+                            className="btn-add-fast"
+                        >
+                            + nuevo trabajo
+                        </button>
+                    </div>
                 </header>
                 <div className="perfil-stats">
                     <div className="stat-card">
@@ -72,7 +85,7 @@ const Perfil  = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {trabajos.map(trabajo =>(
+                            {trabajos.map(trabajo => (
                                 <tr key={trabajo.id}>
                                     <td className="td-titulo">{trabajo.titulo}</td>
                                     <td>{trabajo.ubicacion}</td>
@@ -80,16 +93,16 @@ const Perfil  = () => {
                                     <td>
                                         <div className="tabla-acciones">
                                             <button
-                                            className="btn-action edit"
-                                            onClick={()=>navigate(`/editar-trabajo/${trabajo.id}`)}
-                                            title="editar"
+                                                className="btn-action edit"
+                                                onClick={() => navigate(`/editar-trabajo/${trabajo.id}`)}
+                                                title="editar"
                                             >
                                                 ✏️
                                             </button>
                                             <button
-                                            className="btn-action delete"
-                                            onClick={()=>handleEliminar(trabajo.id)}
-                                            title="Eliminar"
+                                                className="btn-action delete"
+                                                onClick={() => handleEliminar(trabajo.id)}
+                                                title="Eliminar"
                                             >
                                                 🗑️
                                             </button>
