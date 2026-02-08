@@ -31,7 +31,7 @@ const enviarNotificacionNuevoAdmin = async (nombre, emailAdmin) => {
     return info;
   } catch (error) {
     console.error("Error al enviar el correo:", error);
-    throw
+    throw error;
   }
 };
 
