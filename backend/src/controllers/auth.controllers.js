@@ -1,7 +1,7 @@
 const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {enviarNotificacionNurvoAdmin} = require("../utils/mailer")
+const {enviarNotificacionNuevoAdmin} = require("../utils/mailer")
 
 require("dotenv").config();
 
