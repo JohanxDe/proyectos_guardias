@@ -90,7 +90,9 @@ const TrabajoDetalle = () => {
                     </button>
 
                     <a
-                        href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(`Hola, me interesa el puesto de ${trabajo.titulo} que vi en Servicio JG`)}`}
+                        href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
+                            `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink de la oferta: ${window.location.href}`
+                        )}`}
                         className="btn-detalle-ws"
                         target="_blank"
                         rel="noreferrer"

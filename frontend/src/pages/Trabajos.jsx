@@ -10,6 +10,7 @@ const Trabajos = () => {
   const [error, setError] = useState("");
   // ✅ CORRECCIÓN 1: Inicializar el estado
   const [busqueda, setBusqueda] = useState(""); 
+  const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
 
   const { token, usuario } = useAuth();
   const navigate = useNavigate();
@@ -104,8 +105,10 @@ const Trabajos = () => {
 
                 {/* BOTÓN DE WHATSAPP*/}
                 <div className="trabajo-card__public-links">
-                  <a 
-                    href={`https://wa.me/${trabajo.contacto_whatsapp}?text=Hola! Me interesa la vacante de ${encodeURIComponent(trabajo.titulo)}.`}
+                  <a
+                    href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
+                      `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
+                    )}`}
                     target="_blank"
                     rel="noreferrer"
                     className="btn-public btn--whatsapp"
