@@ -57,3 +57,54 @@
     text-decoration: none;
     font-weight: bold;
 }
+
+.detalle-card__footer {
+    display: flex;
+    flex-direction: column; /* En móviles uno sobre otro */
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-compartir {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-detalle-ws {
+    background: #25d366; /* Verde oficial WhatsApp */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+/* En tablets y PC se ponen uno al lado del otro */
+@media (min-width: 600px) {
+    .detalle-card__footer {
+        flex-direction: row;
+    }
+    .btn-compartir {
+        flex: 1;
+    }
+    .btn-detalle-ws {
+        flex: 2; /* El de postular es el protagonista */
+    }
+}
+
+ /*Fecha*/
+.fecha-tag {
+    background: rgba(148, 163, 184, 0.1); /* Un fondo muy suave */
+    color: #94a3b8; /* Gris azulado */
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}

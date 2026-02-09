@@ -3,6 +3,25 @@ import { useParams, useNavigate } from "react-router-dom";
 import { API_ENDPOINTS } from "../config/api";
 import "../styles/detalle.css";
 
+const formatearFecha = (fechaISO) => {
+    if (!fechaISO) return "Recientemente";
+    
+    const fecha = new Date(fechaISO);
+    const ahora = new Date();
+    const diferenciaEnSegundos = Math.floor((ahora - fecha) / 1000);
+    
+    // Cálculos de tiempo
+    const minutos = Math.floor(diferenciaEnSegundos / 60);
+    const horas = Math.floor(minutos / 60);
+    const dias = Math.floor(horas / 24);
+
+    if (dias > 0) return `Publicado hace ${dias} ${dias === 1 ? 'día' : 'días'}`;
+    if (horas > 0) return `Publicado hace ${horas} ${horas === 1 ? 'hora' : 'horas'}`;
+    if (minutos > 0) return `Publicado hace ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'}`;
+    
+    return "Publicado hace un momento";
+};
+
 const TrabajoDetalle = () => {
     const { id } = useParams(); // Captura el ID de la URL
     const navigate = useNavigate();
@@ -24,8 +43,24 @@ const TrabajoDetalle = () => {
         fetchDetalle();
     }, [id]);
 
+    const handleCompartir = () => {
+        const urlCompartir = window.location.href;
+
+        if (navigator.share) {
+            navigator.share({
+                title: `Servicio JG - ${trabajo.titulo}`,
+                text: `Revisa esta oferta laboral: ${trabajo.titulo} en ${trabajo.ubicacion}`,
+                url: urlCompartir,
+            }).catch(console.error);
+        } else {
+            navigator.clipboard.writeText(urlCompartir);
+            alert("Enlace copiado al portapapeles");
+        }
+    };
+
     if (loading) return <div className="loading">Cargando detalles...</div>;
     if (!trabajo) return <div className="error">Trabajo no encontrado</div>;
+
 
     return (
         <div className="detalle-page">
@@ -39,6 +74,7 @@ const TrabajoDetalle = () => {
                     <div className="detalle-meta">
                         <span>📍 {trabajo.ubicacion}</span>
                         <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
+                        <span className="fecha-tag">🕒 {formatearFecha(trabajo.fecha_publicacion)}</span>
                     </div>
                 </header>
 
@@ -47,10 +83,15 @@ const TrabajoDetalle = () => {
                     <p className="descripcion-completa">{trabajo.descripcion}</p>
                 </section>
 
-                <footer className="detalle-footer">
-                    <a 
-                        href={`https://wa.me/TUNUMERO?text=Hola, me interesa el puesto de ${trabajo.titulo}`}
-                        className="btn-ws-detalle"
+                {/* Footer único y limpio */}
+                <footer className="detalle-card__footer">
+                    <button onClick={handleCompartir} className="btn-compartir">
+                        🔗 Compartir vacante
+                    </button>
+
+                    <a
+                        href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(`Hola, me interesa el puesto de ${trabajo.titulo} que vi en Servicio JG`)}`}
+                        className="btn-detalle-ws"
                         target="_blank"
                         rel="noreferrer"
                     >
