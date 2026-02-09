@@ -12,6 +12,8 @@ import EditarNoticia from "./pages/EditarNoticia";
 import NuevoAdmin from "./pages/NuevoAdmin";
 import TrabajoDetalle from "./pages/TrabajoDetalle";
 import GlobalSpinner from "./components/GlobalSpinner";
+import Footer from "./components/Footer";
+import Terminos from "./pages/Terminos";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/adminRoute";
@@ -30,6 +32,7 @@ const App = () => {
         <Route path="/trabajo/:id" element={<TrabajoDetalle />} />
         <Route path="noticias" element={<Noticias/>}/>
         <Route path="login" element={<Login/>}/>
+        <Route path="/terminos" element={<Terminos />} />
 
 
       {/*Rutas protegidas */}
@@ -91,6 +94,7 @@ const App = () => {
         />
       </Routes>
     
+    <Footer/>
     </BrowserRouter>
   )
 };
