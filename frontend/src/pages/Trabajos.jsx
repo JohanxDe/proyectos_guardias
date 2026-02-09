@@ -10,7 +10,6 @@ const Trabajos = () => {
   const [error, setError] = useState("");
   // ✅ CORRECCIÓN 1: Inicializar el estado
   const [busqueda, setBusqueda] = useState(""); 
-  const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
 
   const { token, usuario } = useAuth();
   const navigate = useNavigate();
@@ -59,6 +58,7 @@ const Trabajos = () => {
     t.ubicacion?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
+
   return (
     <>
       <main className="trabajos">
@@ -80,64 +80,66 @@ const Trabajos = () => {
         )}
 
         <section className="trabajos__grid">
-          {/* ✅ CORRECCIÓN 2: Un solo map usando trabajosFiltrados */}
-          {trabajosFiltrados.map((trabajo) => (
-            <article className="trabajo-card" key={trabajo.id}>
-              <div className="trabajo-card__content">
-                <h3>{trabajo.titulo}</h3>
-                
-                <div className="trabajo-card__info">
-                  <span>📍 {trabajo.ubicacion}</span>
-                  <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
-                </div>
+          {trabajosFiltrados.map((trabajo) => {
+            // 1. Definimos la URL aquí adentro, ahora sí reconoce a "trabajo"
+            const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
 
-                <p className="trabajo-card__description">
-                  {trabajo.descripcion.substring(0, 100)}...
-                </p>
+            // 2. Usamos el return manual porque agregamos lógica arriba
+            return (
+              <article className="trabajo-card" key={trabajo.id}>
+                <div className="trabajo-card__content">
+                  <h3>{trabajo.titulo}</h3>
 
-                {/* BOTÓN DE VER OFERTA COMPLETA */}
-                <button
-                  className="btn-details"
-                  onClick={() => navigate(`/trabajo/${trabajo.id}`)}
-                >
-                  Ver oferta completa 🔍
-                </button>
+                  <div className="trabajo-card__info">
+                    <span>📍 {trabajo.ubicacion}</span>
+                    <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
+                  </div>
 
-                {/* BOTÓN DE WHATSAPP*/}
-                <div className="trabajo-card__public-links">
-                  <a
-                    href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
-                      `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-public btn--whatsapp"
+                  <p className="trabajo-card__description">
+                    {trabajo.descripcion.substring(0, 100)}...
+                  </p>
+
+                  <button
+                    className="btn-details"
+                    onClick={() => navigate(`/trabajo/${trabajo.id}`)}
                   >
-                    Postular por WhatsApp
-                  </a>
+                    Ver oferta completa 🔍
+                  </button>
 
-                  {/*Boton de Maps */}
-                  {trabajo.latitud && trabajo.longitud &&(
+                  <div className="trabajo-card__public-links">
                     <a
-                      href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
+                      href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
+                        `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
+                      )}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="btn-public btn--maps"
+                      className="btn-public btn--whatsapp"
                     >
-                      📍 Ver ubicación
+                      Postular por WhatsApp
                     </a>
-                  )}
-                </div>
-              </div>
 
-              {usuario?.role === "admin" && (
-                <div className="trabajo-card__actions">
-                  <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>Editar</button>
-                  <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>Eliminar</button>
+                    {trabajo.latitud && trabajo.longitud && (
+                      <a
+                        href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-public btn--maps"
+                      >
+                        📍 Ver ubicación
+                      </a>
+                    )}
+                  </div>
                 </div>
-              )}
-            </article>
-          ))}
+
+                {usuario?.role === "admin" && (
+                  <div className="trabajo-card__actions">
+                    <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>Editar</button>
+                    <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>Eliminar</button>
+                  </div>
+                )}
+              </article>
+            );
+          })}
         </section>
       </main>
     </>
