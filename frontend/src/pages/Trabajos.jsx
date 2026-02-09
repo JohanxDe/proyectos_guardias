@@ -96,7 +96,7 @@ const Trabajos = () => {
 
                 {/* BOTÓN DE VER OFERTA COMPLETA */}
                 <button
-                  className="btn-ver-mas"
+                  className="btn-details"
                   onClick={() => navigate(`/trabajo/${trabajo.id}`)}
                 >
                   Ver oferta completa 🔍
