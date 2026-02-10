@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-const transporter = require("../config/nodemailer");
+const { enviarNotificacionNuevoTrabajo } = require("../utils/mailer");
 
 // 1. Obtener todos los trabajos
 exports.obtenerTrabajos = async (req, res) => {
@@ -24,9 +24,9 @@ exports.crearTrabajo = async (req, res) => {
             return res.status(403).json({ error: "Acceso denegado" });
         }
 
-        const { 
-            titulo, descripcion, sueldo, ubicacion, 
-            latitud, longitud, imagen_url, contacto_whatsapp 
+        const {
+            titulo, descripcion, sueldo, ubicacion,
+            latitud, longitud, imagen_url, contacto_whatsapp
         } = req.body;
 
         if (!titulo || !descripcion) {
@@ -43,44 +43,17 @@ exports.crearTrabajo = async (req, res) => {
 
         // ✅ ENVIAR CORREO DE NOTIFICACIÓN
         try {
-            await transporter.sendMail({
-                from: `"Sistema Servicio JG" <${process.env.EMAIL_USER}>`,
-                to: process.env.EMAIL_USER, 
-                subject: `📢 Nueva Oferta Publicada: ${titulo}`,
-                html: `
-                    <div style="font-family: sans-serif; border: 1px solid #ddd; padding: 25px; border-radius: 12px; max-width: 600px; color: #333;">
-                        <h2 style="color: #2563eb; margin-top: 0;">✅ Nueva publicación exitosa</h2>
-                        
-                        <p style="background: #f3f4f6; padding: 10px; border-radius: 6px; font-size: 0.9rem;">
-                            <strong>Fecha de publicación:</strong> ${fechaAhora}
-                        </p>
-
-                        <p><strong>Administrador:</strong> ${req.usuario.nombre} (${req.usuario.email})</p>
-                        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-                        
-                        <h3 style="margin-bottom: 10px;">Detalles de la vacante:</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li><strong>Cargo:</strong> ${titulo}</li>
-                            <li><strong>Ubicación:</strong> ${ubicacion}</li>
-                            <li><strong>Sueldo:</strong> $${Number(sueldo).toLocaleString('es-CL')}</li>
-                        </ul>
-
-                        <br>
-                        <div style="text-align: center;">
-                            <a href="${process.env.FRONTEND_URL}/trabajo/${nuevo.rows[0].id}" 
-                               style="background: #2563eb; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                               Ver publicación en la web
-                            </a>
-                        </div>
-                        
-                        <p style="font-size: 0.8rem; color: #999; margin-top: 30px; text-align: center;">
-                            Este es un mensaje automático del sistema de gestión de Servicio JG.
-                        </p>
-                    </div>
-                `
-            });
+            // Llamamos a la función de Resend que creamos arriba
+            await enviarNotificacionNuevoTrabajo(
+                req.usuario.nombre,
+                req.usuario.email,
+                titulo,
+                ubicacion,
+                sueldo,
+                nuevo.rows[0].id
+            );
         } catch (mailError) {
-            console.error("Error al enviar el correo, pero el trabajo se creó igual:", mailError);
+            console.error("Error al enviar el correo:", mailError);
         }
 
         res.json({

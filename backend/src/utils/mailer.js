@@ -37,4 +37,33 @@ const enviarNotificacionNuevoAdmin = async (nombreNuevoAdmin, emailNuevoAdmin) =
   }
 };
 
-module.exports = { enviarNotificacionNuevoAdmin };
+const enviarNotificacionNuevoTrabajo = async (nombreAdmin, emailAdmin, tituloTrabajo, ubicacion, sueldo, trabajoId) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'JG Service <onboarding@resend.dev>',
+      to: 'johan020497@gmail.com', 
+      subject: `📢 Nueva Oferta: ${tituloTrabajo}`,
+      html: `
+        <div style="font-family: sans-serif; background-color: #0f172a; color: #f8fafc; padding: 25px; border-radius: 12px;">
+            <h2 style="color: #3b82f6;">✅ Nueva publicación exitosa</h2>
+            <p>El administrador <strong>${nombreAdmin}</strong> (${emailAdmin}) ha publicado:</p>
+            <hr style="border-color: #334155;">
+            <ul>
+                <li><strong>Cargo:</strong> ${tituloTrabajo}</li>
+                <li><strong>Ubicación:</strong> ${ubicacion}</li>
+                <li><strong>Sueldo:</strong> $${Number(sueldo).toLocaleString('es-CL')}</li>
+            </ul>
+            <a href="${process.env.FRONTEND_URL}/trabajo/${trabajoId}" 
+               style="background-color: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 15px;">
+               Ver en la web
+            </a>
+        </div>
+      `
+    });
+    return data;
+  } catch (err) {
+    console.error("Error envío mail trabajo:", err);
+  }
+};
+
+module.exports = { enviarNotificacionNuevoAdmin,enviarNotificacionNuevoTrabajo };
