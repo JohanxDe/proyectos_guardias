@@ -6,7 +6,8 @@ const{
     crearTrabajo,
     obtenerTrabajoPorId,
     editarTrabajo,
-    eliminarTrabajo
+    eliminarTrabajo,
+    incrementarVisita
 } = require("../controllers/trabajos.controllers");
 
 const verificarToken = require("../middleware/verificarToken");
@@ -20,5 +21,6 @@ router.get("/:id", obtenerTrabajoPorId);
 router.post("/", verificarToken ,crearTrabajo);
 router.put("/:id", verificarToken ,editarTrabajo);
 router.delete("/:id", verificarToken ,eliminarTrabajo);
+router.post("/:id/visita", incrementarVisita)
 
 module.exports = router;

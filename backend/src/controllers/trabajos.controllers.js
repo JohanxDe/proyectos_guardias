@@ -134,3 +134,22 @@ exports.eliminarTrabajo = async(req, res) => {
         res.status(500).json({error: error.message});
     }
 };
+
+exports.incrementarVisita = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(
+            "UPDATE trabajos SET visitas = COALESCE(visitas, 0) + 1 WHERE id = $1 RETURNING visitas",
+            [id]
+        );
+        
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Trabajo no encontrado" });
+        }
+        
+        res.json({ mensaje: "Visita registrada", visitas: result.rows[0].visitas });
+    } catch (error) {
+        console.error("Error al incrementar visita: ", error)
+        res.status(500).json({ error: "Error interno del servidor" })
+    }
+}

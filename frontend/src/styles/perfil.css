@@ -145,3 +145,21 @@
         font-size: 0.8rem;
     }
 }
+
+/*Contador en deashboard*/
+.stat-highlight {
+    border-left: 4px solid #60a5fa; /* Le da un toque azul a la tarjeta de visitas */
+}
+
+.visitas-tag {
+    background: rgba(96, 165, 250, 0.1);
+    color: #60a5fa;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.text-center {
+    text-align: center;
+}
