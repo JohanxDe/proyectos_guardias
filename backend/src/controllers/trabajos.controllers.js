@@ -23,6 +23,10 @@ exports.crearTrabajo = async (req, res) => {
         if (!req.usuario || req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
         }
+        const adminInfo = await pool.query("SELECT nombre, email FROM usuarios WHERE id = $1", [req.usuario.id]);
+        const adminNombre = adminInfo.rows[0]?.nombre || "Administrador";
+        const adminEmail = adminInfo.rows[0]?.email || "Sin email";
+
 
         const {
             titulo, descripcion, sueldo, ubicacion,
@@ -45,8 +49,8 @@ exports.crearTrabajo = async (req, res) => {
         try {
             // Llamamos a la función de Resend que creamos arriba
             await enviarNotificacionNuevoTrabajo(
-                req.usuario.nombre,
-                req.usuario.email,
+                adminNombre,
+                adminEmail,
                 titulo,
                 ubicacion,
                 sueldo,
