@@ -23,7 +23,7 @@ exports.crearTrabajo = async (req, res) => {
         if (!req.usuario || req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
         }
-        const adminInfo = await pool.query("SELECT nombre, email FROM usuarios WHERE id = $1", [req.usuario.id]);
+        const adminInfo = await pool.query("SELECT nombre, email FROM admins WHERE id = $1", [req.usuario.id]);
         console.log("ID del usuario desde el Token:", req.usuario.id);
         console.log("Resultado de la DB:", adminInfo.rows[0]);
         const adminNombre = adminInfo.rows[0]?.nombre || "Administrador";
