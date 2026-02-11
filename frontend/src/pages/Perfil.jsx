@@ -54,7 +54,7 @@ const Perfil = () => {
         }
 
         try {
-            const response = await fetch(`${API_ENDPOINTS.AUTH}/cambiarClave`, {
+            const response = await fetch("https://proyectos-guardias.onrender.com/api/auth/cambiarClave", {
                 method: "PUT",
                 headers: { 
                     "Content-Type": "application/json",
