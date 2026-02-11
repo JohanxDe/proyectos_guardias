@@ -12,6 +12,7 @@ import EditarNoticia from "./pages/EditarNoticia";
 import NuevoAdmin from "./pages/NuevoAdmin";
 import TrabajoDetalle from "./pages/TrabajoDetalle";
 import GlobalSpinner from "./components/GlobalSpinner";
+import CambiarClave from "./pages/CambiarClave";
 import Footer from "./components/Footer";
 import Terminos from "./pages/Terminos";
 
@@ -53,6 +54,15 @@ const App = () => {
           element={
             <AdminRoute>
               <NuevoAdmin />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/cambiarClave"
+          element={
+            <AdminRoute>
+              <CambiarClave/>
             </AdminRoute>
           }
         />
