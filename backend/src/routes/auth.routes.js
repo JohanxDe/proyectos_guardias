@@ -5,7 +5,8 @@ const rateLimit = require("express-rate-limit")
 const {
     registrarUsuario,
     login,
-    obtenerPerfil
+    obtenerPerfil,
+    cambiarClave
 }  = require("../controllers/auth.controllers");
 
 const verificarToken = require("../middleware/verificarToken");
@@ -26,5 +27,6 @@ router.post('/registro-admin', registrarUsuario)
 
 //rutas protegidas
 router.get("/perfil", verificarToken, obtenerPerfil);
+router.put('/cambiarClave', verificarToken, cambiarClave)
 
 module.exports = router;

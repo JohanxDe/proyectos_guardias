@@ -117,3 +117,36 @@ exports.obtenerPerfil = async(req, res) => {
         res.status(500).json({error: "Error al obtener perfil"})
     }
 };
+
+exports.cambiarClave = async(req, res) => {
+    try{
+        const {passwordActual, passwordNueva} = req.body;
+        const usuarioId = req.usuario.id
+
+        //Buscar usuario
+        const userQuery = await pool.query("SELECT * FROM admins WHERE id = $1", [usuarioId]);
+        const usuario = userQuery.rows[0];
+
+        if(!usuario){
+            return res.status(404).json({error: "usuario no encontrado"})
+        }
+
+        //Verificar clave actual
+        const esValida = await bcrypt.compare(passwordActual, usuario.password);
+        if(!esValida){
+            return res.status(404).json({error: "la contraseña actual es incorrecta"});
+        }
+
+        //encriptar nueva contraseña
+        const salt = await bcrypt.genSalt(10)
+        const hashedNueva = await bcrypt.hash(passwordNueva, salt);
+
+        //actualiza la BS
+        await pool.query("UPDATE admins SET password = $2 WHERE id = $1", [usuarioId, hashedNueva]);
+
+        res.json({message: "Contraseña actualizada correctamente"});
+    }catch(error){
+        console.error("Error al cambiar clave: ", error);
+        res.status(500).json({error: "Error interno del servidor"});
+    }
+};
