@@ -8,7 +8,11 @@ const authRoutes = require('./src/routes/auth.routes');
 const app = express();
 app.set('trust proxy', 1);
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://proyectos-guardias-1.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
