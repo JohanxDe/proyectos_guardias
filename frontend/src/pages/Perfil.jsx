@@ -54,7 +54,7 @@ const Perfil = () => {
         }
 
         try {
-            const response = await fetch(`${API_ENDPOINTS.AUTH}/cambiar-clave`, {
+            const response = await fetch(`${API_ENDPOINTS.AUTH}/cambiarClave`, {
                 method: "PUT",
                 headers: { 
                     "Content-Type": "application/json",
