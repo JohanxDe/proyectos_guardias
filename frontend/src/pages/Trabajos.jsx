@@ -3,12 +3,22 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
 import { API_ENDPOINTS } from "../config/api";
+// Importamos los iconos
+import { 
+  Search, 
+  MapPin, 
+  DollarSign, 
+  Pencil, 
+  Trash2, 
+  MessageCircle, 
+  Eye, 
+  Map 
+} from "lucide-react";
 import "../styles/trabajos.css"
 
 const Trabajos = () => {
   const [trabajos, setTrabajos] = useState([]);
   const [error, setError] = useState("");
-  // ✅ CORRECCIÓN 1: Inicializar el estado
   const [busqueda, setBusqueda] = useState(""); 
 
   const { token, usuario } = useAuth();
@@ -52,97 +62,98 @@ const Trabajos = () => {
 
   const handleEditar = (id) => navigate(`/editar-trabajo/${id}`);
 
-  // Lógica de filtrado
   const trabajosFiltrados = trabajos.filter(t =>
     t.titulo?.toLowerCase().includes(busqueda.toLowerCase()) ||
     t.ubicacion?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-
   return (
-    <>
-      <main className="trabajos">
-        <h1 className="trabajos__title">Trabajos Disponibles</h1>
+    <main className="trabajos">
+      <h1 className="trabajos__title">Trabajos Disponibles</h1>
 
-        <div className="search-container">
+      <div className="search-container">
+        <div className="search-wrapper">
+          <Search className="search-icon" size={20} />
           <input
             type="text"
-            placeholder="🔍 Buscar por cargo o comuna..."
+            placeholder="Buscar por cargo o comuna..."
             className="search-input"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
           />
         </div>
+      </div>
 
-        {error && <p className="trabajos__error">{error}</p>}
-        {trabajosFiltrados.length === 0 && !loading && (
-          <p className="trabajos__empty">No se encontraron resultados.</p>
-        )}
+      {error && <p className="trabajos__error">{error}</p>}
+      {trabajosFiltrados.length === 0 && !loading && (
+        <p className="trabajos__empty">No se encontraron resultados.</p>
+      )}
 
-        <section className="trabajos__grid">
-          {trabajosFiltrados.map((trabajo) => {
-            // 1. Definimos la URL aquí adentro, ahora sí reconoce a "trabajo"
-            const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
+      <section className="trabajos__grid">
+        {trabajosFiltrados.map((trabajo) => {
+          const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
 
-            // 2. Usamos el return manual porque agregamos lógica arriba
-            return (
-              <article className="trabajo-card" key={trabajo.id}>
-                <div className="trabajo-card__content">
-                  <h3>{trabajo.titulo}</h3>
+          return (
+            <article className="trabajo-card" key={trabajo.id}>
+              <div className="trabajo-card__content">
+                <h3>{trabajo.titulo}</h3>
 
-                  <div className="trabajo-card__info">
-                    <span>📍 {trabajo.ubicacion}</span>
-                    <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
-                  </div>
-
-                  <p className="trabajo-card__description">
-                    {trabajo.descripcion.substring(0, 100)}...
-                  </p>
-
-                  <button
-                    className="btn-details"
-                    onClick={() => navigate(`/trabajo/${trabajo.id}`)}
-                  >
-                    Ver oferta completa 🔍
-                  </button>
-
-                  <div className="trabajo-card__public-links">
-                    <a
-                      href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
-                        `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
-                      )}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn-public btn--whatsapp"
-                    >
-                      Postular por WhatsApp
-                    </a>
-
-                    {trabajo.latitud && trabajo.longitud && (
-                      <a
-                        href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn-public btn--maps"
-                      >
-                        📍 Ver ubicación
-                      </a>
-                    )}
-                  </div>
+                <div className="trabajo-card__info">
+                  <span><MapPin size={16} color="#3b82f6" /> {trabajo.ubicacion}</span>
+                  <span><DollarSign size={16} color="#22c55e" /> {trabajo.sueldo?.toLocaleString('es-CL')}</span>
                 </div>
 
-                {usuario?.role === "admin" && (
-                  <div className="trabajo-card__actions">
-                    <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>Editar</button>
-                    <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>Eliminar</button>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </section>
-      </main>
-    </>
+                <p className="trabajo-card__description">
+                  {trabajo.descripcion.substring(0, 100)}...
+                </p>
+
+                <button
+                  className="btn-details"
+                  onClick={() => navigate(`/trabajo/${trabajo.id}`)}
+                >
+                  <Eye size={18} /> Ver oferta completa
+                </button>
+
+                <div className="trabajo-card__public-links">
+                  <a
+                    href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
+                      `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-public btn--whatsapp"
+                  >
+                    <MessageCircle size={18} /> WhatsApp
+                  </a>
+
+                  {trabajo.latitud && trabajo.longitud && (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${trabajo.latitud},${trabajo.longitud}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-public btn--maps"
+                    >
+                      <Map size={18} /> Mapa
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {usuario?.role === "admin" && (
+                <div className="trabajo-card__actions">
+                  <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>
+                    <Pencil size={16} />
+                  </button>
+                  <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </section>
+    </main>
   );
 };
 

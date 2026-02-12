@@ -51,15 +51,20 @@
   display: flex;
   gap: 16px;
   justify-content: center;
+  flex-wrap: wrap; /* Para que en móvil no se rompa */
 }
 
-/* BOTONES */
+/* BOTONES (Adaptados para iconos) */
 .btn-primary, .btn-secondary {
   padding: 14px 32px;
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
+  display: inline-flex; /* Alineación para el icono */
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Espacio entre icono y texto */
 }
 
 .btn-primary {
@@ -82,7 +87,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   max-width: 1000px;
-  margin: -40px auto 60px; /* Sube las tarjetas sobre el hero */
+  margin: -40px auto 60px;
   padding: 0 20px;
   position: relative;
   z-index: 5;
@@ -94,12 +99,38 @@
   border-radius: 12px;
   border: 1px solid #1e293b;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.access-card:hover {
+  transform: translateY(-5px);
 }
 
 .access-card h3 { color: #3b82f6; margin-bottom: 10px; }
 .access-card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
-.access-link { color: #f8fafc; font-weight: 600; text-decoration: none; }
-.access-link:hover { color: #3b82f6; }
+
+/* Enlaces con flecha animada */
+.access-link { 
+  color: #f8fafc; 
+  font-weight: 600; 
+  text-decoration: none; 
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.access-link:hover { 
+  color: #3b82f6; 
+}
+
+.access-link svg {
+  transition: transform 0.3s ease;
+}
+
+.access-link:hover svg {
+  transform: translateX(5px); /* La flecha se mueve al hacer hover */
+}
 
 /* TRUST SECTION */
 .trust-section {
@@ -118,7 +149,14 @@
   margin: 0 auto;
 }
 
-.trust-icon { font-size: 2.5rem; margin-bottom: 20px; }
+/* Iconos de confianza */
+.trust-icon { 
+  margin-bottom: 20px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .trust-item h4 { font-size: 1.2rem; margin-bottom: 10px; }
 .trust-item p { color: #64748b; font-size: 0.9rem; }
 

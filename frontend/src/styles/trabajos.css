@@ -24,17 +24,31 @@ body {
   letter-spacing: -1px;
 }
 
-/* --- BUSCADOR --- */
+/* --- BUSCADOR (Actualizado para el Icono) --- */
 .search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
 }
 
-.search-input {
+.search-wrapper {
+  position: relative;
   width: 100%;
   max-width: 500px;
-  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px 12px 45px; /* Espacio extra a la izquierda para la lupa */
   border-radius: 12px;
   border: 1px solid #1e293b;
   background-color: #020617;
@@ -80,10 +94,13 @@ body {
 
 .trabajo-card__info span {
   background: #1e293b;
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.85rem;
   border: 1px solid #334155;
+  display: flex; /* Para alinear icono y texto */
+  align-items: center;
+  gap: 6px;
 }
 
 .trabajo-card__content h3 {
@@ -119,6 +136,10 @@ body {
   text-align: center;
   transition: all 0.3s ease;
   border: 1px solid transparent;
+  display: flex; /* Alineación de icono */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn--whatsapp {
@@ -141,7 +162,7 @@ body {
   border-color: #60a5fa;
 }
 
-/* --- BOTONES ADMIN --- */
+/* --- BOTONES ADMIN (Actualizado para Iconos) --- */
 .trabajo-card__actions {
   display: flex;
   gap: 10px;
@@ -151,11 +172,15 @@ body {
 
 .btn-admin {
   flex: 1;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   border: none;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .btn--edit {
@@ -164,49 +189,23 @@ body {
   border: 1px solid #3b82f6;
 }
 
+.btn--edit:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
 .btn--delete {
   background-color: rgba(239, 68, 68, 0.1);
   color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.btn--delete:hover { background-color: #ef4444; color: white; }
-
-/* --- RESPONSIVIDAD (Media Queries) --- */
-
-/* Celulares y tablets pequeñas */
-@media (max-width: 600px) {
-  .trabajos__title {
-    font-size: 1.8rem; /* Título más pequeño en móvil */
-  }
-
-  .trabajo-card__public-links {
-    flex-direction: column; /* Botones uno sobre otro en pantallas muy chicas */
-  }
-
-  .trabajo-card__info {
-    flex-direction: column; /* Ubicación y Sueldo uno sobre otro si no hay espacio */
-    gap: 5px;
-  }
+.btn--delete:hover { 
+  background-color: #ef4444; 
+  color: white; 
 }
 
-/* Tablets y Desktop */
-@media (min-width: 601px) {
-  .trabajo-card__public-links {
-    flex-direction: row; /* Botones lado a lado */
-  }
-  
-  .btn-public {
-    flex: 1; /* Ambos botones miden lo mismo */
-  }
-}
-
-/* Grid para pantallas muy grandes */
-@media (min-width: 1200px) {
-  .trabajos__grid {
-    grid-template-columns: repeat(3, 1fr); /* Forzamos 3 columnas en pantallas grandes */
-  }
-}
-/* --- BOTÓN VER MÁS (NUEVO) --- */
+/* --- BOTÓN VER MÁS --- */
 .btn-details {
   background: none;
   border: 1px solid rgba(96, 165, 250, 0.3);
@@ -228,4 +227,15 @@ body {
   background-color: rgba(96, 165, 250, 0.1);
   border-color: #60a5fa;
   transform: translateX(5px); 
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 600px) {
+  .trabajos__title { font-size: 1.8rem; }
+  .trabajo-card__public-links { flex-direction: column; }
+  .trabajo-card__info { flex-direction: column; gap: 5px; }
+}
+
+@media (min-width: 1200px) {
+  .trabajos__grid { grid-template-columns: repeat(3, 1fr); }
 }
