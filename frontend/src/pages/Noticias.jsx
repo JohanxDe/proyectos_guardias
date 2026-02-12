@@ -8,12 +8,17 @@ import "../styles/noticas.css";
 const Noticias = () => {
     const [noticia, setNoticias] = useState([]);
     const [error, setError] = useState("");
-    const [showFilters, setShowFilters] = useState(false);
-    const [filtroTexto, setFiltroTexto] = useState("");
+    
+    // Estados para Dropdown de filtrado
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
     const { token, usuario } = useAuth();
     const navigate = useNavigate();
     const { setLoading } = useLoading();
+
+    // Lista de categorías 
+    const categorias = ["Todas", "Seguridad", "Noticias", "Capacitación", "Eventos", "os10"];
 
     useEffect(() => {
         const fetchNoticias = async () => {
@@ -46,9 +51,9 @@ const Noticias = () => {
         }
     };
 
-    // Filtrado lógico
+    // Lógica de filtrado por categoría
     const noticiasFiltradas = noticia.filter(n => 
-        n.titulo.toLowerCase().includes(filtroTexto.toLowerCase())
+        categoriaSeleccionada === "Todas" ? true : n.categoria === categoriaSeleccionada
     );
 
     return (
@@ -56,37 +61,49 @@ const Noticias = () => {
             <div className="noticias__header-box">
                 <h1 className="noticias__title">Actualidad y Noticias</h1>
                 
-                {/* Botón que activa el filtro */}
-                <button 
-                    className="btn-filter-trigger" 
-                    onClick={() => setShowFilters(!showFilters)}
-                >
-                    {showFilters ? "✕ Cerrar Buscador" : "🔍 Buscar Noticias"}
-                </button>
+                {/* Contenedor del Dropdown */}
+                <div className="noticias__filter-wrapper">
+                    <button 
+                        className="dropdown-button" 
+                        onClick={() => setShowDropdown(!showDropdown)}
+                    >
+                        {categoriaSeleccionada === "Todas" ? "🔍 Filtrar por categoría" : `Categoría: ${categoriaSeleccionada}`}
+                        <span className={`dropdown-arrow ${showDropdown ? 'open' : ''}`}>▼</span>
+                    </button>
 
-                {/* Acordeón de filtros */}
-                <div className={`noticias__filters-accordion ${showFilters ? "open" : ""}`}>
-                    <input 
-                        type="text" 
-                        placeholder="Escribe el título de la noticia..." 
-                        value={filtroTexto}
-                        onChange={(e) => setFiltroTexto(e.target.value)}
-                        className="filter-input"
-                    />
+                    {/* Lista que baja */}
+                    <ul className={`dropdown-list ${showDropdown ? 'show' : ''}`}>
+                        {categorias.map((cat) => (
+                            <li 
+                                key={cat} 
+                                className="dropdown-item"
+                                onClick={() => {
+                                    setCategoriaSeleccionada(cat);
+                                    setShowDropdown(false);
+                                }}
+                            >
+                                {cat}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
 
             {error && <p className="noticias__error">{error}</p>}
 
+            {noticiasFiltradas.length === 0 && !error && (
+                <p className="noticias__empty">No hay noticias en esta categoría.</p>
+            )}
+
             <section className="noticias__list-wide">
                 {noticiasFiltradas.map((n) => (
                     <article className="noticia-card-wide" key={n.id}>
                         <div className="noticia-card__top">
-                            {/* Fecha arriba como pediste */}
+                            {/* Fecha arriba resaltada */}
                             <span className="noticia-card__date">
                                 📅 {new Date(n.fecha_publicacion).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}
                             </span>
-                            <span className="noticia-card__category">{n.categoria}</span>
+                            <span className="noticia-card__category-tag">{n.categoria}</span>
                         </div>
 
                         <div className="noticia-card__body">

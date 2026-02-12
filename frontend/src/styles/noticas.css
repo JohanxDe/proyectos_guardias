@@ -1,20 +1,18 @@
-.noticias {
-  min-height: calc(100vh - 64px);
-  background-color: #020617;
-  padding: 32px;
-  box-sizing: border-box;
+/* --- Estructura General --- */
+.noticias-container {
+  min-height: 85vh;
+  max-width: 1000px; 
+  margin: 0 auto;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra el contenido a lo ancho */
+  background-color: #020617;
 }
 
-.noticias-container {
-    min-height: 80vh; 
-    max-width: 1000px; 
-    margin: 0 auto;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
+.noticias__header-box {
+  text-align: left; /* Alineado con las cards */
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .noticias__title {
@@ -22,74 +20,100 @@
   font-weight: 600;
   color: #f8fafc;
   margin-bottom: 24px;
-  width: 100%;
-  max-width: 1000px; /* Alineado con las cards */
 }
 
-/* Botón y Filtro Acordeón */
-.noticias__header-box {
-  text-align: center;
-  margin-bottom: 40px;
-  width: 100%;
+/* --- DROPDOWN (Filtro por Categoría) --- */
+.noticias__filter-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 10; /* Para que la lista flote sobre las cards */
 }
 
-.btn-filter-trigger {
-  background: transparent;
+.dropdown-button {
+  background-color: #0f172a;
   color: #3b82f6;
-  border: 1px solid #3b82f6;
-  padding: 8px 16px;
+  border: 1px solid #1e293b;
+  padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 220px;
+  justify-content: space-between;
+  transition: all 0.3s ease;
 }
 
-.btn-filter-trigger:hover {
-  background: #3b82f6;
-  color: white;
+.dropdown-button:hover {
+  border-color: #3b82f6;
+  background-color: #1e293b;
 }
 
-.noticias__filters-accordion {
+.dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* La lista que baja */
+.dropdown-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  
+  /* Animación de apertura */
   max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out, margin 0.3s, opacity 0.3s;
   opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }
 
-.noticias__filters-accordion.open {
-  max-height: 100px;
-  margin-top: 15px;
+.dropdown-list.show {
+  max-height: 300px;
   opacity: 1;
 }
 
-.filter-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #1e293b;
-  background: #0f172a;
-  color: white;
-  font-size: 1rem;
+.dropdown-item {
+  padding: 12px 20px;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
 }
 
-/* --- El Listado Ancho --- */
+.dropdown-item:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* --- LISTADO DE NOTICIAS --- */
 .noticias__list-wide {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  align-items: center;
 }
 
-/* Card Rediseñada a Horizontal */
 .noticia-card-wide {
   background-color: #020617; 
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    padding: 30px;
-    width: 100%; 
-    box-sizing: border-box;
-    position: relative;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 35px;
+  width: 100%; 
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .noticia-card-wide:hover {
@@ -98,12 +122,11 @@
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Fecha y Categoría arriba */
 .noticia-card__top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .noticia-card__date {
@@ -111,40 +134,59 @@
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.noticia-card__category {
+.noticia-card__category-tag {
   color: #94a3b8;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   background: #1e293b;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #334155;
+  text-transform: uppercase;
 }
 
 .noticia-card__title {
   color: #f1f5f9;
-  font-size: 1.8rem; /* Título imponente */
-  margin-bottom: 12px;
+  font-size: 2rem; 
+  margin-bottom: 15px;
   line-height: 1.2;
 }
 
 .noticia-card__desc {
   color: #94a3b8;
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 1.1rem;
+  line-height: 1.7;
 }
 
-/* --- Acciones de Admin --- */
+/* --- ACCIONES ADMIN --- */
 .noticia-card__admin-actions {
   display: flex;
   gap: 15px;
-  margin-top: 20px;
+  margin-top: 25px;
   padding-top: 20px;
   border-top: 1px solid #1e293b;
 }
 
-/* Botones estilos de antes */
-.btn--edit { color: #4ade80; background: none; border: 1px solid #4ade80; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
-.btn--delete { color: #f87171; background: none; border: 1px solid #f87171; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
+.btn--edit, .btn--delete {
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.btn--edit { color: #4ade80; border: 1px solid #4ade80; }
 .btn--edit:hover { background: #4ade80; color: #020617; }
+
+.btn--delete { color: #f87171; border: 1px solid #f87171; }
 .btn--delete:hover { background: #f87171; color: #020617; }
+
+.noticias__empty {
+  color: #64748b;
+  text-align: center;
+  margin-top: 50px;
+  font-style: italic;
+}
