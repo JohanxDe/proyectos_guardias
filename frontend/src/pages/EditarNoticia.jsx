@@ -6,84 +6,94 @@ import { API_ENDPOINTS } from "../config/api";
 import "../styles/form.css"
 
 const EditarNoticia = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
-    const {token} = useAuth();
+    const { token } = useAuth();
 
     const [titulo, setTitulo] = useState("");
     const [descripcion, setDescripcion] = useState("");
-    const [error, setError] = useState("")
+    const [categoria, setCategoria] = useState("Noticias"); 
+    const [imagenUrl, setImagenUrl] = useState(""); 
+    const [error, setError] = useState("");
 
-    //Cargar noticias
+    // Cargar noticia para editar
     useEffect(() => {
-        const fetchNoticias = async() => {
-            try{
-                const response = await fetch(
-                    `${API_ENDPOINTS.NOTICIAS}/${id}`
-                );
-
+        const fetchNoticia = async () => {
+            try {
+                const response = await fetch(`${API_ENDPOINTS.NOTICIAS}/${id}`);
                 const data = await response.json();
 
-                if(!response.ok){
-                    setError(data.error || "Error al cargar la noticia")
+                if (!response.ok) {
+                    setError(data.error || "Error al cargar la noticia");
                     return;
                 }
 
+                // Seteamos los valores que vienen de la DB
                 setTitulo(data.titulo);
                 setDescripcion(data.descripcion);
-            }catch{
-                setError("Error de conexion")
+                setCategoria(data.categoria || "Noticias"); // Cargamos la categoría guardada
+                setImagenUrl(data.imagen_url || "");
+            } catch {
+                setError("Error de conexión");
             }
         };
 
-        fetchNoticias();
+        fetchNoticia();
     }, [id]);
 
-    //Editar noticia
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try{
+        try {
             const response = await fetch(
                 `${API_ENDPOINTS.NOTICIAS}/${id}`,
                 {
                     method: "PUT",
-                    headers:{
-                        "content-type" : "application/json",
+                    headers: {
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({titulo, descripcion}),
+                    // ENVIAMOS la categoría al backend actualizado
+                    body: JSON.stringify({ 
+                        titulo, 
+                        descripcion, 
+                        categoria, 
+                        imagen_url: imagenUrl 
+                    }),
                 }
             );
 
-            if(!response.ok){
-                throw new Error();
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error);
             }
-            navigate("/noticias")
-        }catch{
-            setError("No se puede editar la noticia")
+            navigate("/noticias");
+        } catch (err) {
+            setError(err.message || "No se puede editar la noticia");
         }
     };
 
-    return(
-        <>
+    return (
         <div className="form-page">
             <div className="form-card">
                 <h1 className="form-title">Editar noticia</h1>
 
                 <NoticiasForm
-                titulo={titulo}
-                setTitulo={setTitulo}
-                descripcion={descripcion}
-                setDescripcion={setDescripcion}
-                onSubmit={handleSubmit}
-                textoBoton="Guardar Cambios"
-                error={error}
+                    titulo={titulo}
+                    setTitulo={setTitulo}
+                    descripcion={descripcion}
+                    setDescripcion={setDescripcion}
+                    categoria={categoria}        
+                    setCategoria={setCategoria}  
+                    imagenUrl={imagenUrl}        
+                    setImagenUrl={setImagenUrl}  
+                    onSubmit={handleSubmit}
+                    textoBoton="Guardar Cambios"
+                    error={error}
                 />
             </div>
         </div>
-        </>
-    )
+    );
 };
 
 export default EditarNoticia;

@@ -7,6 +7,7 @@ const CrearNoticia = () => {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [imagenUrl, setImagenUrl] = useState("");
+  const [categoria, setCategoria] = useState("Noticias"); 
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,6 @@ const CrearNoticia = () => {
 
     try {
       setLoading(true);
-
       const token = localStorage.getItem("token");
 
       const response = await fetch(API_ENDPOINTS.NOTICIAS, {
@@ -38,6 +38,7 @@ const CrearNoticia = () => {
           titulo,
           descripcion,
           imagen_url: imagenUrl || null,
+          categoria, 
         }),
       });
 
@@ -70,33 +71,51 @@ const CrearNoticia = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
+            <label className="form-label">Título</label>
             <input
               type="text"
-              placeholder="Título"
+              placeholder="Ej: Nueva normativa de seguridad"
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
             />
           </div>
 
           <div className="form-group">
+            <label className="form-label">Categoría</label>
+            <select
+              className="form-select"
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
+            >
+              <option value="Noticias">Noticias</option>
+              <option value="Seguridad">Seguridad</option>
+              <option value="Capacitación">Capacitación</option>
+              <option value="Eventos">Eventos</option>
+              <option value="os10">OS10</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Descripción</label>
             <textarea
-              placeholder="Descripción"
+              placeholder="Escribe el contenido de la noticia..."
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
             />
           </div>
 
           <div className="form-group">
+            <label className="form-label">URL de la Imagen</label>
             <input
               type="text"
-              placeholder="Imagen URL (opcional)"
+              placeholder="https://ejemplo.com/imagen.jpg"
               value={imagenUrl}
               onChange={(e) => setImagenUrl(e.target.value)}
             />
           </div>
 
           <button className="form-button" type="submit" disabled={loading}>
-            {loading ? "Guardando..." : "Crear Noticia"}
+            {loading ? "Guardando..." : "Publicar Noticia"}
           </button>
         </form>
       </div>

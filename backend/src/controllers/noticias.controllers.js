@@ -13,13 +13,13 @@ exports.obtenerNoticias = async (req, res) =>{
 
 //Crear una noticia
 exports.crearNoticia = async (req, res) => {
-
     if (req.usuario.role !== "admin") {
         return res.status(403).json({ error: "Acceso denegado" });
     }
 
     try {
-        const { titulo, descripcion, imagen_url } = req.body;
+        // AÑADIMOS categoria aquí
+        const { titulo, descripcion, imagen_url, categoria } = req.body;
 
         if (!titulo || !descripcion) {
             return res.status(400).json({
@@ -28,17 +28,16 @@ exports.crearNoticia = async (req, res) => {
         }
 
         const nueva = await pool.query(
-            `INSERT INTO noticias (titulo, descripcion, imagen_url)
-             VALUES ($1, $2, $3)
+            `INSERT INTO noticias (titulo, descripcion, imagen_url, categoria)
+             VALUES ($1, $2, $3, $4)
              RETURNING *`,
-            [titulo, descripcion, imagen_url || null]
+            [titulo, descripcion, imagen_url || null, categoria || "General"]
         );
 
         res.status(201).json({
             message: "Noticia creada correctamente",
             noticia: nueva.rows[0]
         });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -65,33 +64,32 @@ exports.obtenerNoticiasPorId = async (req, res) => {
 };
 
 //editar notica
-exports.editarNoticia =async (req, res) => {
-
+exports.editarNoticia = async (req, res) => {
     if (req.usuario.role !== "admin") {
         return res.status(403).json({ error: "Acceso denegado" });
     }
 
-    try{
+    try {
         const { id } = req.params;
-        const { titulo, descripcion, imagen_url } = req.body
+        const { titulo, descripcion, imagen_url, categoria } = req.body; // AÑADIMOS categoria
 
         const actualizada = await pool.query(
             `UPDATE noticias
-            SET titulo = $1, descripcion = $2, imagen_url = $3
-            WHERE id = $4 RETURNING *`,
-            [titulo, descripcion, imagen_url, id]
+            SET titulo = $1, descripcion = $2, imagen_url = $3, categoria = $4
+            WHERE id = $5 RETURNING *`,
+            [titulo, descripcion, imagen_url, categoria, id]
         );
 
-        if(actualizada.rows.length === 0){
-            return res.status(404).json({error: "noticia no encontrada"})
+        if (actualizada.rows.length === 0) {
+            return res.status(404).json({ error: "noticia no encontrada" });
         }
 
         res.json({
             message: "noticia actualizada",
             noticia: actualizada.rows[0]
         });
-    }catch(error){
-        res.status(500).json({error: error.message})
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 

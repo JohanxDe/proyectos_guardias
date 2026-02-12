@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 40px 16px;
+  background-color: #020617;
 }
 
 .form-card {
@@ -23,22 +24,40 @@
   color: #f8fafc;
 }
 
-/* Inputs */
+/* Inputs, Textarea y el nuevo Select */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px; /* Un poco más de espacio para la label */
   margin-bottom: 18px;
 }
 
+/* Nueva clase para las etiquetas */
+.form-label {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-select { 
   background-color: #020617;
   border: 1px solid #334155;
   border-radius: 10px;
   padding: 12px 14px;
   color: #f8fafc;
   font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+/* Estilo específico para el select para que no se vea blanco al hacer clic */
+.form-select option {
+  background-color: #020617;
+  color: #f8fafc;
 }
 
 .form-group textarea {
@@ -47,7 +66,8 @@
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-select:focus {
   outline: none;
   border-color: #3b82f6;
 }
@@ -60,6 +80,7 @@
   border-radius: 8px;
   font-size: 0.9rem;
   margin-bottom: 16px;
+  border: 1px solid rgba(248, 113, 113, 0.2);
 }
 
 .form-success {
@@ -69,6 +90,7 @@
   border-radius: 8px;
   font-size: 0.9rem;
   margin-bottom: 16px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 /* Botón */
@@ -80,7 +102,10 @@
   border: none;
   border-radius: 10px;
   font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
 }
 
 .form-button:disabled {
