@@ -3,75 +3,139 @@
   background-color: #020617;
   padding: 32px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido a lo ancho */
 }
 
 .noticias__title {
-  font-size: 2rem;
+  font-size: 2.5rem; /* Un poco más grande para el estilo nuevo */
   font-weight: 600;
   color: #f8fafc;
   margin-bottom: 24px;
+  width: 100%;
+  max-width: 1000px; /* Alineado con las cards */
 }
 
-/* Grid */
-.noticias__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+/* --- NUEVO: Botón y Filtro Acordeón --- */
+.noticias__header-box {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px;
 }
 
-/* Card */
-.noticia-card {
+.btn-filter-trigger {
+  background: transparent;
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-filter-trigger:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.noticias__filters-accordion {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, margin 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+
+.noticias__filters-accordion.open {
+  max-height: 100px;
+  margin-top: 15px;
+  opacity: 1;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  background: #0f172a;
+  color: white;
+  font-size: 1rem;
+}
+
+/* --- El Listado Ancho --- */
+.noticias__list-wide {
+  width: 100%;
+  max-width: 1000px; /* Aquí controlas qué tan ancho se ve en pantalla */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card Rediseñada a Horizontal */
+.noticia-card-wide {
   background-color: #020617;
   border: 1px solid #1e293b;
   border-radius: 12px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  padding: 20px;
+  padding: 30px;
   box-sizing: border-box;
-
   transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+  position: relative;
 }
 
-.noticia-card:hover {
+.noticia-card-wide:hover {
   transform: translateY(-4px);
   border-color: #3b82f6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Content */
-.noticia-card__content h3 {
-  color: #f1f5f9;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
-}
-
-.noticia-card__content p {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Actions */
-.noticia-card__actions {
+/* Fecha y Categoría arriba */
+.noticia-card__top {
   display: flex;
-  gap: 10px;
-  margin-top: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-/* Estados */
-.noticias__error {
-  color: #fecaca;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.noticia-card__date {
+  color: #3b82f6; /* Azul para destacar la fecha */
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-.noticias__empty {
+.noticia-card__category {
   color: #94a3b8;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
+  background: #1e293b;
+  padding: 4px 10px;
+  border-radius: 6px;
 }
+
+.noticia-card__title {
+  color: #f1f5f9;
+  font-size: 1.8rem; /* Título imponente */
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.noticia-card__desc {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* --- Acciones de Admin --- */
+.noticia-card__admin-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #1e293b;
+}
+
+/* Botones con tus estilos de antes */
+.btn--edit { color: #4ade80; background: none; border: 1px solid #4ade80; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
+.btn--delete { color: #f87171; background: none; border: 1px solid #f87171; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
+.btn--edit:hover { background: #4ade80; color: #020617; }
+.btn--delete:hover { background: #f87171; color: #020617; }
