@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
 import { API_ENDPOINTS } from "../config/api";
-import "../styles/noticas.css"; 
+import "../styles/noticas.css";
+import { Calendar, Search, ChevronDown } from "lucide-react"
 
 const Noticias = () => {
     const [noticia, setNoticias] = useState([]);
     const [error, setError] = useState("");
-    
+
     // Estados para Dropdown de filtrado
     const [showDropdown, setShowDropdown] = useState(false);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
@@ -52,7 +53,7 @@ const Noticias = () => {
     };
 
     // Lógica de filtrado por categoría
-    const noticiasFiltradas = noticia.filter(n => 
+    const noticiasFiltradas = noticia.filter(n =>
         categoriaSeleccionada === "Todas" ? true : n.categoria === categoriaSeleccionada
     );
 
@@ -60,15 +61,25 @@ const Noticias = () => {
         <main className="noticias-container">
             <div className="noticias__header-box">
                 <h1 className="noticias__title">Actualidad y Noticias</h1>
-                
+
                 {/* Contenedor del Dropdown */}
                 <div className="noticias__filter-wrapper">
-                    <button 
-                        className="dropdown-button" 
+                    <button
+                        className="dropdown-button"
                         onClick={() => setShowDropdown(!showDropdown)}
                     >
-                        {categoriaSeleccionada === "Todas" ? "🔍 Filtrar por categoría" : `Categoría: ${categoriaSeleccionada}`}
-                        <span className={`dropdown-arrow ${showDropdown ? 'open' : ''}`}>▼</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <Search size={18} className="icon-blue" />
+                            <span>
+                                {categoriaSeleccionada === "Todas"
+                                    ? "Filtrar por categoría"
+                                    : `Categoría: ${categoriaSeleccionada}`}
+                            </span>
+                        </div>
+                        <ChevronDown
+                            size={18}
+                            className={`dropdown-arrow ${showDropdown ? 'open' : ''}`}
+                        />
                     </button>
 
                     {/* Lista que baja */}
@@ -101,7 +112,7 @@ const Noticias = () => {
                         <div className="noticia-card__top">
                             {/* Fecha arriba resaltada */}
                             <span className="noticia-card__date">
-                                📅 {new Date(n.fecha_publicacion).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                <Calendar size={14} className="icon-blue" /> {new Date(n.fecha_publicacion).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}
                             </span>
                             <span className="noticia-card__category-tag">{n.categoria}</span>
                         </div>
