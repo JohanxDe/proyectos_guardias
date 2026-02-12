@@ -8,8 +8,17 @@
   align-items: center; /* Centra el contenido a lo ancho */
 }
 
+.noticias-container {
+    min-height: 80vh; 
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 .noticias__title {
-  font-size: 2.5rem; /* Un poco más grande para el estilo nuevo */
+  font-size: 2.5rem; 
   font-weight: 600;
   color: #f8fafc;
   margin-bottom: 24px;
@@ -17,11 +26,11 @@
   max-width: 1000px; /* Alineado con las cards */
 }
 
-/* --- NUEVO: Botón y Filtro Acordeón --- */
+/* Botón y Filtro Acordeón */
 .noticias__header-box {
+  text-align: center;
+  margin-bottom: 40px;
   width: 100%;
-  max-width: 1000px;
-  margin-bottom: 30px;
 }
 
 .btn-filter-trigger {
@@ -66,21 +75,21 @@
 /* --- El Listado Ancho --- */
 .noticias__list-wide {
   width: 100%;
-  max-width: 1000px; /* Aquí controlas qué tan ancho se ve en pantalla */
   display: flex;
   flex-direction: column;
   gap: 24px;
+  align-items: center;
 }
 
 /* Card Rediseñada a Horizontal */
 .noticia-card-wide {
-  background-color: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 30px;
-  box-sizing: border-box;
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-  position: relative;
+  background-color: #020617; 
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%; 
+    box-sizing: border-box;
+    position: relative;
 }
 
 .noticia-card-wide:hover {
@@ -98,7 +107,7 @@
 }
 
 .noticia-card__date {
-  color: #3b82f6; /* Azul para destacar la fecha */
+  color: #3b82f6;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -134,7 +143,7 @@
   border-top: 1px solid #1e293b;
 }
 
-/* Botones con tus estilos de antes */
+/* Botones estilos de antes */
 .btn--edit { color: #4ade80; background: none; border: 1px solid #4ade80; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
 .btn--delete { color: #f87171; background: none; border: 1px solid #f87171; padding: 5px 15px; border-radius: 6px; cursor: pointer; }
 .btn--edit:hover { background: #4ade80; color: #020617; }
