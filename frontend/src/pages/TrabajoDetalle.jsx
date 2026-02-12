@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_ENDPOINTS } from "../config/api";
-import useAuth from "../hooks/useAuth"; // Importamos el hook de autenticación
+import useAuth from "../hooks/useAuth";
+import { 
+  ChevronLeft, 
+  MapPin, 
+  CircleDollarSign, 
+  Clock, 
+  Share2, 
+  MessageCircle, 
+  TrendingUp,
+  Loader2
+} from "lucide-react";
 import "../styles/detalle.css";
 
 const formatearFecha = (fechaISO) => {
@@ -22,7 +32,7 @@ const formatearFecha = (fechaISO) => {
 const TrabajoDetalle = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { usuario } = useAuth(); // Obtenemos el usuario logueado
+    const { usuario } = useAuth();
     const [trabajo, setTrabajo] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -33,7 +43,6 @@ const TrabajoDetalle = () => {
                 const data = await response.json();
                 setTrabajo(data);
 
-                // ✅ REGISTRAR VISITA (Se dispara automáticamente al cargar)
                 fetch(`${API_ENDPOINTS.TRABAJOS}/${id}/visita`, { 
                     method: 'POST' 
                 }).catch(err => console.error("Error al registrar visita:", err));
@@ -61,31 +70,38 @@ const TrabajoDetalle = () => {
         }
     };
 
-    if (loading) return <div className="loading">Cargando detalles...</div>;
+    if (loading) return (
+        <div className="detalle-loading">
+            <Loader2 className="spinner" size={40} />
+            <p>Cargando detalles...</p>
+        </div>
+    );
+    
     if (!trabajo) return <div className="error">Trabajo no encontrado</div>;
 
     return (
         <div className="detalle-page">
             <button onClick={() => navigate(-1)} className="btn-back">
-                ← Volver atrás
+                <ChevronLeft size={20} /> Volver atrás
             </button>
 
             <div className="detalle-card">
                 <header className="detalle-header">
                     <div className="header-flex">
                         <h1>{trabajo.titulo}</h1>
-                        {/* ✅ CONTADOR SOLO PARA ADMINS */}
                         {usuario?.role === "admin" && (
                             <span className="badge-visitas">
-                                📈 {trabajo.visitas || 0} visitas
+                                <TrendingUp size={14} /> {trabajo.visitas || 0} visitas
                             </span>
                         )}
                     </div>
                     
                     <div className="detalle-meta">
-                        <span>📍 {trabajo.ubicacion}</span>
-                        <span>💰 ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
-                        <span className="fecha-tag">🕒 {formatearFecha(trabajo.fecha_publicacion)}</span>
+                        <span><MapPin size={18} color="#3b82f6" /> {trabajo.ubicacion}</span>
+                        <span><CircleDollarSign size={18} color="#22c55e" /> ${trabajo.sueldo?.toLocaleString('es-CL')}</span>
+                        <span className="fecha-tag">
+                            <Clock size={16} /> {formatearFecha(trabajo.fecha_publicacion)}
+                        </span>
                     </div>
                 </header>
 
@@ -96,7 +112,7 @@ const TrabajoDetalle = () => {
 
                 <footer className="detalle-card__footer">
                     <button onClick={handleCompartir} className="btn-compartir">
-                        🔗 Compartir vacante
+                        <Share2 size={18} /> Compartir vacante
                     </button>
 
                     <a
@@ -107,7 +123,7 @@ const TrabajoDetalle = () => {
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Postular por WhatsApp
+                        <MessageCircle size={18} /> Postular por WhatsApp
                     </a>
                 </footer>
             </div>

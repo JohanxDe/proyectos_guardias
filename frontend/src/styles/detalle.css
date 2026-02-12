@@ -14,30 +14,76 @@
     padding: 30px;
 }
 
+/* --- HEADER --- */
 .detalle-header h1 {
     color: #60a5fa;
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin: 0; /* Ajustado para el flex */
 }
 
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* --- BADGE ADMIN --- */
+.badge-visitas {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: 1px solid rgba(138, 138, 138, 0.3);
+    white-space: nowrap;
+    display: flex; 
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- META DATOS (Iconos de ubicación y sueldo) --- */
 .detalle-meta {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     color: #94a3b8;
     border-bottom: 1px solid #1e293b;
     padding-bottom: 20px;
 }
 
+.detalle-meta span {
+    display: flex; 
+    align-items: center;
+    gap: 8px;
+}
+
+.fecha-tag {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- CUERPO --- */
 .detalle-cuerpo {
     margin: 30px 0;
 }
 
 .descripcion-completa {
     line-height: 1.8;
-    white-space: pre-wrap; /* Mantiene los saltos de línea de la base de datos */
+    white-space: pre-wrap;
     color: #cbd5e1;
 }
 
+/* --- BOTONES --- */
 .btn-back {
     background: none;
     border: none;
@@ -45,48 +91,73 @@
     cursor: pointer;
     font-size: 1rem;
     margin-bottom: 20px;
-}
-
-.btn-ws-detalle {
-    display: block;
-    text-align: center;
-    background-color: #25d366; /* Verde WhatsApp */
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
 }
 
 .detalle-card__footer {
     display: flex;
-    flex-direction: column; /* En móviles uno sobre otro */
+    flex-direction: column;
     gap: 12px;
     margin-top: 30px;
+}
+
+.btn-compartir, .btn-detalle-ws {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
 }
 
 .btn-compartir {
     background: #1e293b;
     color: #f8fafc;
     border: 1px solid #334155;
-    padding: 14px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
+}
+
+.btn-compartir:hover {
+    background: #334155;
 }
 
 .btn-detalle-ws {
-    background: #25d366; /* Verde oficial WhatsApp */
+    background: #25d366; 
     color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 14px;
-    border-radius: 10px;
     font-weight: 700;
 }
 
-/* En tablets y PC se ponen uno al lado del otro */
+.btn-detalle-ws:hover {
+    filter: brightness(1.1);
+}
+
+/* --- CARGANDO --- */
+.detalle-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    color: #3b82f6;
+    gap: 15px;
+}
+
+.spinner {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- RESPONSIVIDAD --- */
 @media (min-width: 600px) {
     .detalle-card__footer {
         flex-direction: row;
@@ -95,42 +166,10 @@
         flex: 1;
     }
     .btn-detalle-ws {
-        flex: 2; /* El de postular es el protagonista */
+        flex: 2; 
     }
 }
 
- /*Fecha*/
-.fecha-tag {
-    background: rgba(148, 163, 184, 0.1); /* Un fondo muy suave */
-    color: #94a3b8; /* Gris azulado */
-    font-size: 0.8rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-}
-
-
-/*Vista de visitas*/
-.header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.badge-visitas {
-    background: rgba(96, 165, 250, 0.15);
-    color: #60a5fa;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-    white-space: nowrap;
-}
-
-/* En móviles, el título y el badge se ponen uno sobre otro */
 @media (max-width: 600px) {
     .header-flex {
         flex-direction: column;
