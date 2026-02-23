@@ -4,7 +4,8 @@ import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
 import { API_ENDPOINTS } from "../config/api";
 import "../styles/noticas.css";
-import { Calendar, Search, ChevronDown } from "lucide-react"
+import { Calendar, Search, ChevronDown, Pencil, Trash2 } from "lucide-react"
+
 
 const Noticias = () => {
     const [noticia, setNoticias] = useState([]);
@@ -124,8 +125,12 @@ const Noticias = () => {
 
                         {usuario?.role === "admin" && (
                             <div className="noticia-card__admin-actions">
-                                <button className="btn--edit" onClick={() => navigate(`/editar-noticia/${n.id}`)}>✏️ Editar</button>
-                                <button className="btn--delete" onClick={() => handleEliminar(n.id)}>🗑️ Eliminar</button>
+                                <button className="btn--edit" onClick={() => navigate(`/editar-noticia/${n.id}`)}>
+                                    <Pencil size={16} />
+                                </button>
+                                <button className="btn--delete" onClick={() => handleEliminar(n.id)}>
+                                    <Trash2 size={16} />
+                                </button>
                             </div>
                         )}
                     </article>

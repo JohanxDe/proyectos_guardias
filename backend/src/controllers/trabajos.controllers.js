@@ -44,7 +44,7 @@ exports.crearTrabajo = async (req, res) => {
             `INSERT INTO trabajos (titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
              RETURNING *`,
-            [titulo, descripcion, sueldo || null, ubicacion || null, latitud || null, longitud || null, imagen_url || null, contacto_whatsapp || '+56992757448']
+            [titulo, descripcion, sueldo || null, ubicacion || null, latitud || null, longitud || null, imagen_url || null, contacto_whatsapp || '+56983544519']
         );
 
         // ✅ ENVIAR CORREO DE NOTIFICACIÓN
