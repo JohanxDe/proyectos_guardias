@@ -9,7 +9,7 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use(cors({
-  origin: 'https://proyectos-guardias-1.onrender.com',
+  origin:  process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
