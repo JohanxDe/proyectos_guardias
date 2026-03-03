@@ -1,8 +1,8 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth";
+import { API_BASE_URL } from "../config/api"; 
 import "../styles/cambiarClave.css"
-
 
 const CambiarClave = () => {
     const { token } = useAuth();
@@ -12,10 +12,11 @@ const CambiarClave = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validaciones...
         if (passwords.nueva !== passwords.confirmar) {
             return setStatusMsg({ texto: "Las contraseñas nuevas no coinciden", tipo: "error" });
         }
-
         if (passwords.nueva.length < 8) {
             return setStatusMsg({ texto: "La nueva contraseña debe tener al menos 8 caracteres", tipo: "error" });
         }
@@ -25,7 +26,7 @@ const CambiarClave = () => {
         }
 
         try {
-            const response = await fetch("https://proyectos-guardias.onrender.com/api/auth/cambiarClave", {
+            const response = await fetch(`${API_BASE_URL}/api/auth/cambiarClave`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +41,7 @@ const CambiarClave = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setStatusMsg({ texto: "Exito cerrando sesion...", tipo: "exito" })
+                setStatusMsg({ texto: "Contraseña actualizada. Cerrando sesión...", tipo: "exito" })
                 setTimeout(() => {
                     localStorage.removeItem("token");
                     window.location.href = "/login";
@@ -49,7 +50,7 @@ const CambiarClave = () => {
                 setStatusMsg({ texto: data.error || "Error al cambiar clave", tipo: "error" })
             }
         } catch (error) {
-            setStatusMsg({ texto: "Error de conexion", tipo: "Error" })
+            setStatusMsg({ texto: "Error de conexión con el servidor", tipo: "error" })
         }
     }
 
