@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const enviarNotificacionNuevoAdmin = async (nombreNuevoAdmin, emailNuevoAdmin) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'JG Service <onboarding@resend.dev>',
+      from: 'JG Service <contacto@jgservice.cl>',
       
       to: 'johan020497@gmail.com', 
       subject: '🔔 Alerta: Nuevo Administrador Registrado',
@@ -40,7 +40,7 @@ const enviarNotificacionNuevoAdmin = async (nombreNuevoAdmin, emailNuevoAdmin) =
 const enviarNotificacionNuevoTrabajo = async (nombreAdmin, emailAdmin, tituloTrabajo, ubicacion, sueldo, trabajoId) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'JG Service <onboarding@resend.dev>',
+      from: 'JG Service <contacto@jgservice.cl>',
       to: 'johan020497@gmail.com', 
       subject: `📢 Nueva Oferta: ${tituloTrabajo}`,
       html: `
