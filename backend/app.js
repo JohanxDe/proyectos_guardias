@@ -9,7 +9,10 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use(cors({
-  origin:  process.env.FRONTEND_URL,
+  origin:  [
+        'https://www.jgservice.cl', 
+        'https://jgservice.cl', 
+        'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
