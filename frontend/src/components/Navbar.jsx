@@ -1,39 +1,44 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const { usuario, logout } = useAuth();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+
+  
+  const [isLight, setIsLight] = useState(localStorage.getItem('theme') === 'light');
+
+  useEffect(() => {
+    if (isLight) {
+      document.body.classList.add('light-mode');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.body.classList.remove('light-mode');
+      localStorage.setItem('theme', 'dark');
+    }
+  }, [isLight]);
 
   return (
     <header className="navbar">
       <div className="navbar__container">
         {/* Logo / Home */}
         <NavLink to="/" className="navbar__logo">
-        <img src="/logoSinF.png" alt="Logo empresa"className="navbar__logo-img"/>
-        <span className="navbar__logo-text">
-          JG Service
-        </span>
+          <img src="/logoSinF.png" alt="Logo empresa" className="navbar__logo-img"/>
+          <span className="navbar__logo-text">JG Service</span>
         </NavLink>
 
-        {/*Hamburguesa*/}
-        <button
-        className="navbar__toggle"
-        onClick={() => setOpen(!open)}
-        >
+        {/* Hamburguesa */}
+        <button className="navbar__toggle" onClick={() => setOpen(!open)}>
           ☰
         </button>
 
-
-      <div className={`navbar__menu ${open ? "is-open" : ""}`}>
-          {/* Links */}
+        <div className={`navbar__menu ${open ? "is-open" : ""}`}>
           <nav className="navbar__links">
             <NavLink to="/trabajos" className="navbar__link" onClick={()=> setOpen(false)}>
               Trabajos
             </NavLink>
-
             <NavLink to="/noticias" className="navbar__link" onClick={()=> setOpen(false)}>
               Noticias
             </NavLink>
@@ -43,11 +48,9 @@ const Navbar = () => {
                 <NavLink to="/perfil" className="navbar__link navbar__link--admin" onClick={() => setOpen(false)}>
                   Administracion
                 </NavLink>
-
                 <NavLink to="/crear-trabajo" className="navbar__link" onClick={()=> setOpen(false)}>
                   + Trabajo
                 </NavLink>
-
                 <NavLink to="/crear-noticia" className="navbar__link" onClick={()=> setOpen(false)}>
                   + Noticia
                 </NavLink>
@@ -55,18 +58,26 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* Auth */}
-          <div className="navbar__auth">
+          {/* Sección de Auth y el Botón de Modo */}
+          <div className="navbar__auth" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            
+            {/* BOTÓN MODO CLARO/OSCURO */}
+            <button 
+              onClick={() => setIsLight(!isLight)}
+              className="theme-toggle-btn"
+              title="Cambiar modo de color"
+            >
+              {isLight ? '🌙' : '☀️'}
+            </button>
+
             {!usuario ? (
               <NavLink to="/login" className="btn btn--primary" onClick={()=> setOpen(false)}>
                 Ingresar
               </NavLink>
             ) : (
-              <>
-                <button onClick={logout} className="btn btn--logout">
-                  Cerrar sesión
-                </button>
-              </>
+              <button onClick={logout} className="btn btn--logout">
+                Cerrar sesión
+              </button>
             )}
           </div>
         </div>

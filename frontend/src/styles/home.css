@@ -1,6 +1,26 @@
+:root {
+  --bg-home: #0f172a;
+  --bg-hero-top: #1e293b;
+  --bg-card: #020617;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #1e293b;
+  --btn-sec-border: #334155;
+}
+
+body.light-mode {
+  --bg-home: #f8fafc;
+  --bg-hero-top: #e2e8f0;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: #cbd5e1;
+  --btn-sec-border: #cbd5e1;
+}
+
 .home {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: var(--bg-home);
+  color: var(--text-main);
   font-family: 'Inter', sans-serif;
 }
 
@@ -9,7 +29,7 @@
   position: relative;
   padding: 120px 20px 80px;
   text-align: center;
-  background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+  background: radial-gradient(circle at top, var(--bg-hero-top) 0%, var(--bg-home) 100%);
 }
 
 .hero__badge {
@@ -41,7 +61,7 @@
 
 .hero__subtitle {
   font-size: 1.15rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   max-width: 650px;
   margin: 0 auto 40px;
   line-height: 1.6;
@@ -74,8 +94,8 @@
 }
 
 .btn-secondary {
-  border: 1px solid #334155;
-  color: white;
+  border: 1px solid var(--btn-sec-border);
+  color: var(--text-main);
 }
 
 .btn-primary:hover { transform: translateY(-2px); background-color: #2563eb; }
@@ -94,10 +114,10 @@
 }
 
 .access-card {
-  background-color: #020617;
+  background-color: var(--bg-card);
   padding: 30px;
   border-radius: 12px;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--border-color);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   transition: transform 0.3s ease;
 }
