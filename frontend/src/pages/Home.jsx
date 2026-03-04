@@ -82,7 +82,8 @@ const Home = () => {
       {/* CTA FINAL */}
       {!usuario && (
         <section className="admin-cta">
-          <p>¿Eres reclutador? <Link to="/login">Inicia sesión aquí</Link> para publicar.</p>
+          <p>¿Eres reclutador y necesitas acceso?</p>
+          <p>Escríbenos a <a href="mailto:contacto@jgservice.cl">contacto@jgservice.cl</a> para habilitar tu cuenta.</p>
         </section>
       )}
     </div>
