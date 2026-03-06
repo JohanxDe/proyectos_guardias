@@ -6,11 +6,12 @@
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  background-color: #020617;
+  background-color: var(--bg-home); /* Cambiado de fijo a variable */
+  transition: background-color 0.3s ease;
 }
 
 .noticias__header-box {
-  text-align: left; /* Alineado con las cards */
+  text-align: left;
   margin-bottom: 40px;
   width: 100%;
 }
@@ -18,7 +19,7 @@
 .noticias__title {
   font-size: 2.5rem; 
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--text-main);
   margin-bottom: 24px;
 }
 
@@ -26,13 +27,13 @@
 .noticias__filter-wrapper {
   position: relative;
   display: inline-block;
-  z-index: 10; /* Para que la lista flote sobre las cards */
+  z-index: 10;
 }
 
 .dropdown-button {
-  background-color: #0f172a;
+  background-color: var(--bg-card); /* Ahora será blanco en modo claro */
   color: #3b82f6;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--border-color);
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -47,33 +48,23 @@
 
 .dropdown-button:hover {
   border-color: #3b82f6;
-  background-color: #1e293b;
+  background-color: var(--bg-home);
 }
 
-.dropdown-arrow {
-  font-size: 0.7rem;
-  transition: transform 0.3s ease;
-}
-
-.dropdown-arrow.open {
-  transform: rotate(180deg);
-}
-
-/* La lista que baja */
 .dropdown-list {
   position: absolute;
   top: 110%;
   left: 0;
   width: 100%;
-  background-color: #0f172a;
-  border: 1px solid #1e293b;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   list-style: none;
   padding: 8px 0;
   margin: 0;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  /* Sombra suavizada para modo claro */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
   
-  /* Animación de apertura */
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -87,7 +78,7 @@
 
 .dropdown-item {
   padding: 12px 20px;
-  color: #94a3b8;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.2s;
@@ -95,7 +86,7 @@
 
 .dropdown-item:hover {
   background-color: #3b82f6;
-  color: white;
+  color: white; /* Se mantiene blanco por el fondo azul del hover */
 }
 
 /* --- LISTADO DE NOTICIAS --- */
@@ -107,8 +98,8 @@
 }
 
 .noticia-card-wide {
-  background-color: #020617; 
-  border: 1px solid #1e293b;
+  background-color: var(--bg-card); 
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 35px;
   width: 100%; 
@@ -119,14 +110,7 @@
 .noticia-card-wide:hover {
   transform: translateY(-4px);
   border-color: #3b82f6;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-.noticia-card__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .noticia-card__date {
@@ -138,24 +122,24 @@
 }
 
 .noticia-card__category-tag {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.75rem;
-  background: #1e293b;
+  background: var(--bg-home);
   padding: 5px 12px;
   border-radius: 20px;
-  border: 1px solid #334155;
+  border: 1px solid var(--border-color);
   text-transform: uppercase;
 }
 
 .noticia-card__title {
-  color: #f1f5f9;
+  color: var(--text-main);
   font-size: 2rem; 
   margin-bottom: 15px;
   line-height: 1.2;
 }
 
 .noticia-card__desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 1.1rem;
   line-height: 1.7;
 }
@@ -166,26 +150,24 @@
   gap: 15px;
   margin-top: 25px;
   padding-top: 20px;
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid var(--border-color);
 }
 
-.btn--edit, .btn--delete {
-  padding: 8px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  background: transparent;
-  transition: all 0.2s;
+/* Los botones Edit y Delete  */
+.btn--edit { 
+  color: #16a34a; /* Un verde más sólido */
+  border: 1px solid #16a34a; 
 }
+.btn--edit:hover { background: #16a34a; color: white; }
 
-.btn--edit { color: #4ade80; border: 1px solid #4ade80; }
-.btn--edit:hover { background: #4ade80; color: #020617; }
-
-.btn--delete { color: #f87171; border: 1px solid #f87171; }
-.btn--delete:hover { background: #f87171; color: #020617; }
+.btn--delete { 
+  color: #dc2626; /* Un rojo más sólido */
+  border: 1px solid #dc2626; 
+}
+.btn--delete:hover { background: #dc2626; color: white; }
 
 .noticias__empty {
-  color: #64748b;
+  color: var(--text-muted);
   text-align: center;
   margin-top: 50px;
   font-style: italic;

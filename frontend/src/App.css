@@ -2,3 +2,37 @@
     margin:0;
     padding: 0;
 }
+
+/* --- CENTRO DE MANDO DE COLORES --- */
+:root {
+  /* Modo Oscuro (Default) */
+  --bg-home: #0f172a;
+  --bg-hero-top: #1e293b;
+  --bg-card: #020617;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #1e293b;
+  --btn-sec-border: #334155;
+}
+
+body.light-mode {
+  /* Modo Claro */
+  --bg-home: #f8fafc;
+  --bg-hero-top: #e2e8f0;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: #cbd5e1;
+  --btn-sec-border: #cbd5e1;
+}
+
+/* Tus estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
