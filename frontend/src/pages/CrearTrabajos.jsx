@@ -17,7 +17,7 @@ const CrearTrabajo = () => {
   const [ubicacion, setUbicacion] = useState("");
   const [latitud, setLatitud] = useState("");
   const [longitud, setLongitud] = useState("");
-  const [contacto_whatsapp, setContacto_whatsapp] = useState("56983544519");
+  const [contacto_whatsapp, setContacto_whatsapp] = useState("56956795637");
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
 

@@ -1,9 +1,10 @@
 /* --- CONFIGURACIÓN GENERAL --- */
 body {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: var(--bg-home);
+  color: var(--text-main);
   margin: 0;
   font-family: sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .trabajos {
@@ -24,7 +25,7 @@ body {
   letter-spacing: -1px;
 }
 
-/* --- BUSCADOR (Actualizado para el Icono) --- */
+/* --- BUSCADOR --- */
 .search-container {
   display: flex;
   justify-content: center;
@@ -42,17 +43,17 @@ body {
 .search-icon {
   position: absolute;
   left: 15px;
-  color: #64748b;
+  color: var(--text-muted); /* Adaptable */
   pointer-events: none;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px 20px 12px 45px; /* Espacio extra a la izquierda para la lupa */
+  padding: 12px 20px 12px 45px;
   border-radius: 12px;
-  border: 1px solid #1e293b;
-  background-color: #020617;
-  color: #f8fafc;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-main);
   outline: none;
   transition: all 0.3s ease;
 }
@@ -71,8 +72,8 @@ body {
 
 /* --- TARJETA --- */
 .trabajo-card {
-  background-color: #020617;
-  border: 1px solid #1e293b;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -83,7 +84,8 @@ body {
 .trabajo-card:hover {
   transform: translateY(-5px);
   border-color: #3b82f6;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  /* Sombra más suave para que no manche en modo claro */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
 }
 
 .trabajo-card__info {
@@ -93,23 +95,24 @@ body {
 }
 
 .trabajo-card__info span {
-  background: #1e293b;
+  background: var(--bg-home); /* Fondo invertido para contraste */
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.85rem;
-  border: 1px solid #334155;
-  display: flex; /* Para alinear icono y texto */
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .trabajo-card__content h3 {
   margin: 0 0 10px 0;
-  color: #f1f5f9;
+  color: var(--text-main);
 }
 
 .trabajo-card__content p {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 20px;
@@ -119,7 +122,7 @@ body {
   overflow: hidden;
 }
 
-/* --- BOTONES PÚBLICOS (WhatsApp y Maps) --- */
+/* --- BOTONES PÚBLICOS --- */
 .trabajo-card__public-links {
   display: flex;
   gap: 10px;
@@ -136,56 +139,33 @@ body {
   text-align: center;
   transition: all 0.3s ease;
   border: 1px solid transparent;
-  display: flex; /* Alineación de icono */
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
 .btn--whatsapp {
-  color: #4ade80 !important;
-  border-color: rgba(74, 222, 128, 0.2);
-}
-
-.btn--whatsapp:hover {
-  background-color: rgba(74, 222, 128, 0.1);
-  border-color: #4ade80;
+  color: #16a34a !important; /* Un verde un poco más oscuro para legibilidad */
+  border-color: rgba(74, 222, 128, 0.4);
 }
 
 .btn--maps {
-  color: #60a5fa !important;
-  border-color: rgba(96, 165, 250, 0.2);
+  color: #2563eb !important; /* Azul más sólido */
+  border-color: rgba(96, 165, 250, 0.4);
 }
 
-.btn--maps:hover {
-  background-color: rgba(96, 165, 250, 0.1);
-  border-color: #60a5fa;
-}
-
-/* --- BOTONES ADMIN (Actualizado para Iconos) --- */
+/* --- BOTONES ADMIN --- */
 .trabajo-card__actions {
   display: flex;
   gap: 10px;
   padding-top: 15px;
-  border-top: 1px solid #1e293b;
-}
-
-.btn-admin {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
+  border-top: 1px solid var(--border-color);
 }
 
 .btn--edit {
-  background-color: #1e293b;
-  color: #60a5fa;
+  background-color: var(--bg-home);
+  color: #3b82f6;
   border: 1px solid #3b82f6;
 }
 
@@ -194,22 +174,11 @@ body {
   color: white;
 }
 
-.btn--delete {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-.btn--delete:hover { 
-  background-color: #ef4444; 
-  color: white; 
-}
-
 /* --- BOTÓN VER MÁS --- */
 .btn-details {
   background: none;
-  border: 1px solid rgba(96, 165, 250, 0.3);
-  color: #60a5fa;
+  border: 1px solid var(--border-color);
+  color: #3b82f6;
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -221,12 +190,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.btn-details:hover {
-  background-color: rgba(96, 165, 250, 0.1);
-  border-color: #60a5fa;
-  transform: translateX(5px); 
 }
 
 /* --- RESPONSIVIDAD --- */
