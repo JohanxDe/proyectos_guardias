@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
 import { API_ENDPOINTS } from "../config/api";
-// Importamos los iconos
+//iconos
 import { 
   Search, 
   MapPin, 
@@ -24,6 +24,20 @@ const Trabajos = () => {
   const { token, usuario } = useAuth();
   const navigate = useNavigate();
   const { loading, setLoading } = useLoading();
+
+  //Funcion para slug
+  const crearSlug = (texto) =>{
+    if(!texto) return "oferta";
+    return texto
+    .toString()
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')//quita los tildes
+    .replace(/\s+/g, '-') //quita espacios por guiones
+    .replace(/[^\w-]+/g, '')//quita caracteres especiales
+    .replace(/--+/g, '-'); //evita guiones dobles
+  };
 
   useEffect(() => {
     const fetchTrabajos = async () => {
@@ -91,7 +105,8 @@ const Trabajos = () => {
 
       <section className="trabajos__grid">
         {trabajosFiltrados.map((trabajo) => {
-          const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}`;
+          const slug = crearSlug(trabajo.titulo)
+          const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}/${slug}`;
 
           return (
             <article className="trabajo-card" key={trabajo.id}>
@@ -109,7 +124,7 @@ const Trabajos = () => {
 
                 <button
                   className="btn-details"
-                  onClick={() => navigate(`/trabajo/${trabajo.id}`)}
+                  onClick={() => navigate(`/trabajo/${trabajo.id}/${slug}`)}
                 >
                   <Eye size={18} /> Ver oferta completa
                 </button>
