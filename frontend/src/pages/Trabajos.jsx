@@ -39,6 +39,16 @@ const Trabajos = () => {
     .replace(/--+/g, '-'); //evita guiones dobles
   };
 
+  //funcion para rastrear clics de Whastapp
+  const trackWhatsAppClick = (titulo) => {
+    if(window.gtag){
+      window.gtag('event', 'click_whatsapp_lista',{
+        'trabajo_titulo': titulo,
+        'ubicacion_click': 'lista_general'
+      });
+    }
+  }
+
   useEffect(() => {
     const fetchTrabajos = async () => {
       try {
@@ -137,6 +147,7 @@ const Trabajos = () => {
                     target="_blank"
                     rel="noreferrer"
                     className="btn-public btn--whatsapp"
+                    onClick={()=> trackWhatsAppClick(trabajo.titulo)}
                   >
                     <MessageCircle size={18} /> WhatsApp
                   </a>

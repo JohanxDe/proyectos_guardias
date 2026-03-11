@@ -70,6 +70,16 @@ const TrabajoDetalle = () => {
         }
     };
 
+    // Función para rastrear clics en WhatsApp desde el detalle
+    const trackWhatsAppClickDetalle = (titulo) => {
+        if (window.gtag) {
+            window.gtag('event', 'click_whatsapp_detalle', {
+                'trabajo_titulo': titulo,
+                'ubicacion_click': 'detalle_producto'
+            });
+        }
+    };
+
     if (loading) return (
         <div className="detalle-loading">
             <Loader2 className="spinner" size={40} />
@@ -122,6 +132,7 @@ const TrabajoDetalle = () => {
                         className="btn-detalle-ws"
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => trackWhatsAppClickDetalle(trabajo.titulo)}
                     >
                         <MessageCircle size={18} /> Postular por WhatsApp
                     </a>
