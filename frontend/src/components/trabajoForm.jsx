@@ -7,6 +7,7 @@ const TrabajoForm = ({
     longitud, setLongitud,
     latitud, setLatitud,
     contacto_whatsapp, setContacto_whatsapp,
+    destacado, setDestacado,
     onSubmit, textoBoton, error, mensaje, loading
 }) => {
     return(
@@ -21,6 +22,18 @@ const TrabajoForm = ({
                     placeholder="titulo"
                     required
                 />
+            </div>
+            <div className="form-group checkbox-group">
+                <label>
+                    <input 
+                    type="checkbox" checked={destacado}
+                     onChange={(e) => setDestacado(e.target.checked)}
+                     style={{width: '20px', height: '20px'}}
+                     />
+                     <span style={{fontWeight: 'bold', color: destacado ? '#ef4444' : 'inherit'}}>
+                        {destacado ? '🔥 ¡Oferta Destacada activada!' : '¿Destacar esta oferta?'}
+                     </span>
+                </label>
             </div>
             <div className="form-row">
                 <div className="form-group">

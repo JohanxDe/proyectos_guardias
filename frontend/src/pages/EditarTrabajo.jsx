@@ -18,6 +18,7 @@ const EditarTrabajo = () => {
   const [latitud, setLatitud] = useState("");
   const [longitud, setLongitud] = useState("")
   const [contacto_whatsapp, setContacto_whatsapp] = useState("");
+  const [destacado, setDestacado] = useState(false)
   const [imagenUrl, setImagenUrl] = useState("")
   const [error, setError] = useState("");
 
@@ -38,14 +39,15 @@ const EditarTrabajo = () => {
           return;
         }
 
-        setTitulo(data.titulo);
-        setDescripcion(data.descripcion);
-        setSueldo(data.sueldo);
-        setUbicacion(data.ubicacion);
-        setLatitud(data.latitud);
-        setLongitud(data.longitud);
-        setContacto_whatsapp(data.contacto_whatsapp);
-        setImagenUrl(data.imagenUrl);
+        setTitulo(data.titulo || "");
+        setDescripcion(data.descripcion || "");
+        setSueldo(data.sueldo || "");
+        setUbicacion(data.ubicacion || "" );
+        setLatitud(data.latitud || "");
+        setLongitud(data.longitud || "");
+        setContacto_whatsapp(data.contacto_whatsapp || "");
+        setImagenUrl(data.imagen_url || "");
+        setDestacado(data.destacado || false)
       } catch {
         setError("Error de conexión");
       }
@@ -76,7 +78,8 @@ const EditarTrabajo = () => {
             latitud: parseFloat(latitud) || null,
             longitud: parseFloat(longitud) || null,
             contacto_whatsapp,
-            imagenUrl: imagenUrl
+            imagen_url: imagenUrl,
+            destacado : destacado
            }),
         }
       );
@@ -105,6 +108,7 @@ const EditarTrabajo = () => {
             latitud={latitud} setLatitud={setLatitud}
             longitud={longitud} setLongitud={setLongitud}
             contacto_whatsapp={contacto_whatsapp} setContacto_whatsapp={setContacto_whatsapp}
+            destacado={destacado} setDestacado={setDestacado}
             imagenUrl={imagenUrl} setImagenUrl={setImagenUrl}
             onSubmit={handleSubmit}
             textoBoton="Guardar cambios"

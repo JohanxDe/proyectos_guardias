@@ -18,6 +18,7 @@ const CrearTrabajo = () => {
   const [latitud, setLatitud] = useState("");
   const [longitud, setLongitud] = useState("");
   const [contacto_whatsapp, setContacto_whatsapp] = useState("56956795637");
+  const [destacado, setDestacado] = useState(false)
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
 
@@ -59,7 +60,8 @@ const CrearTrabajo = () => {
             ubicacion,
             latitud: parseFloat(latitud) || null,
             longitud: parseFloat(longitud) || null,
-            contacto_whatsapp: contacto_whatsapp
+            contacto_whatsapp: contacto_whatsapp,
+            destacado: destacado
             }),
         });
 
@@ -81,6 +83,7 @@ const CrearTrabajo = () => {
         setUbicacion("");
         setLatitud("");
         setLongitud("")
+        setDestacado(false)
 
         // opcional: redirigir
         setTimeout(() => {
@@ -109,6 +112,7 @@ const CrearTrabajo = () => {
           latitud={latitud} setLatitud={setLatitud}
           longitud={longitud} setLongitud={setLongitud}
           contacto_whatsapp={contacto_whatsapp} setContacto_whatsapp={setContacto_whatsapp}
+          destacado={destacado} setDestacado={setDestacado}
           onSubmit={handleSubmit}
           textoBoton="Crear trabajo"
           error={error}

@@ -119,8 +119,18 @@ const Trabajos = () => {
           const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}/${slug}`;
 
           return (
-            <article className="trabajo-card" key={trabajo.id}>
+            /* Clase dinámica trabajo-card--destacado */
+            <article 
+              className={`trabajo-card ${trabajo.destacado ? 'trabajo-card--destacado' : ''}`} 
+              key={trabajo.id}
+            >
               <div className="trabajo-card__content">
+                
+                {/* Etiqueta visual para destacados */}
+                {trabajo.destacado && (
+                  <span className="badge-destacado">🔥 Oferta Destacada</span>
+                )}
+
                 <h3>{trabajo.titulo}</h3>
 
                 <div className="trabajo-card__info">
@@ -154,7 +164,7 @@ const Trabajos = () => {
 
                   {trabajo.latitud && trabajo.longitud && (
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${trabajo.latitud},${trabajo.longitud}`}
+                      href={`https://www.google.com/maps?q=${trabajo.latitud},${trabajo.longitud}`}
                       target="_blank"
                       rel="noreferrer"
                       className="btn-public btn--maps"
