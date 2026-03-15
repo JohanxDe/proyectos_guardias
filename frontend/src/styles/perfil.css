@@ -212,3 +212,75 @@
         padding: 15px;
     }
 }
+/* Estilo del Switch en la tabla */
+.admin-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.admin-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.admin-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #4b5563;
+  transition: .4s;
+  border-radius: 20px;
+}
+
+.admin-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .admin-slider {
+  background-color: #ef4444; /* Rojo para destacar */
+}
+
+input:checked + .admin-slider:before {
+  transform: translateX(20px);
+}
+
+/* Opcional: Resaltar ligeramente la fila si está destacada */
+.row-destacada {
+    background-color: rgba(239, 68, 68, 0.05) !important;
+}
+/* Animación para la estrella en la tabla de admin */
+.row-destacada .td-titulo svg {
+  animation: latido-icon 1.5s infinite;
+  filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.8));
+}
+
+@keyframes latido-icon {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Opcional: Un suave resplandor de fondo para la fila */
+.row-destacada {
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%) !important;
+}

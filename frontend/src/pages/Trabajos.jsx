@@ -3,56 +3,58 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLoading from "../hooks/useLoading";
 import { API_ENDPOINTS } from "../config/api";
-//iconos
-import { 
-  Search, 
-  MapPin, 
-  DollarSign, 
-  Pencil, 
-  Trash2, 
-  MessageCircle, 
-  Eye, 
-  Map 
+// Iconos
+import {
+  Search,
+  MapPin,
+  DollarSign,
+  Pencil,
+  Trash2,
+  MessageCircle,
+  Eye,
+  Map,
+  Star, // Importamos Star para el filtro
 } from "lucide-react";
-import "../styles/trabajos.css"
+import "../styles/trabajos.css";
 
 const Trabajos = () => {
   const [trabajos, setTrabajos] = useState([]);
   const [error, setError] = useState("");
-  const [busqueda, setBusqueda] = useState(""); 
+  const [busqueda, setBusqueda] = useState("");
+  const [soloDestacados, setSoloDestacados] = useState(false); // Estado para el filtro
 
   const { token, usuario } = useAuth();
   const navigate = useNavigate();
   const { loading, setLoading } = useLoading();
 
-  //Funcion para slug
-  const crearSlug = (texto) =>{
-    if(!texto) return "oferta";
+  // Funcion para slug
+  const crearSlug = (texto) => {
+    if (!texto) return "oferta";
     return texto
-    .toString()
-    .toLowerCase()
-    .trim()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')//quita los tildes
-    .replace(/\s+/g, '-') //quita espacios por guiones
-    .replace(/[^\w-]+/g, '')//quita caracteres especiales
-    .replace(/--+/g, '-'); //evita guiones dobles
+      .toString()
+      .toLowerCase()
+      .trim()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // quita los tildes
+      .replace(/\s+/g, "-") // quita espacios por guiones
+      .replace(/[^\w-]+/g, "") // quita caracteres especiales
+      .replace(/--+/g, "-"); // evita guiones dobles
   };
 
-  //funcion para rastrear clics de Whastapp
+  // Funcion para rastrear clics de WhatsApp
   const trackWhatsAppClick = (titulo) => {
-    if(window.gtag){
-      window.gtag('event', 'click_whatsapp_lista',{
-        'trabajo_titulo': titulo,
-        'ubicacion_click': 'lista_general'
+    if (window.gtag) {
+      window.gtag("event", "click_whatsapp_lista", {
+        trabajo_titulo: titulo,
+        ubicacion_click: "lista_general",
       });
     }
-  }
+  };
 
   useEffect(() => {
     const fetchTrabajos = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await fetch(API_ENDPOINTS.TRABAJOS);
         const data = await response.json();
         if (!response.ok) {
@@ -78,18 +80,30 @@ const Trabajos = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error();
-      setTrabajos(trabajos.filter((t) => t.id !== id))
+      setTrabajos(trabajos.filter((t) => t.id !== id));
     } catch (err) {
-      alert("no se pudo eliminar el trabajo")
+      alert("No se pudo eliminar el trabajo");
     }
-  }
+  };
 
   const handleEditar = (id) => navigate(`/editar-trabajo/${id}`);
 
-  const trabajosFiltrados = trabajos.filter(t =>
-    t.titulo?.toLowerCase().includes(busqueda.toLowerCase()) ||
-    t.ubicacion?.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  // Lógica de filtrado y ordenamiento combinada
+  const trabajosFiltrados = trabajos
+    .filter((t) => {
+      // Coincidencia por texto
+      const coincideTexto =
+        t.titulo?.toLowerCase().includes(busqueda.toLowerCase()) ||
+        t.ubicacion?.toLowerCase().includes(busqueda.toLowerCase());
+
+      // Coincidencia por filtro de destacados
+      if (soloDestacados) {
+        return coincideTexto && t.destacado === true;
+      }
+      return coincideTexto;
+    })
+    // Ordenar: Los destacados siempre aparecen primero
+    .sort((a, b) => (b.destacado === true) - (a.destacado === true));
 
   return (
     <main className="trabajos">
@@ -106,26 +120,36 @@ const Trabajos = () => {
             onChange={(e) => setBusqueda(e.target.value)}
           />
         </div>
+
+        {/* Botón de Filtro de Destacados */}
+        <button
+          className={`filter-btn ${soloDestacados ? "filter-btn--active" : ""}`}
+          onClick={() => setSoloDestacados(!soloDestacados)}
+        >
+          <Star size={18} fill={soloDestacados ? "#fff" : "transparent"} />
+          <span className="filter-btn-text">
+            {soloDestacados ? "Destacados" : "Todos"}
+          </span>
+        </button>
       </div>
 
       {error && <p className="trabajos__error">{error}</p>}
+
       {trabajosFiltrados.length === 0 && !loading && (
         <p className="trabajos__empty">No se encontraron resultados.</p>
       )}
 
       <section className="trabajos__grid">
         {trabajosFiltrados.map((trabajo) => {
-          const slug = crearSlug(trabajo.titulo)
+          const slug = crearSlug(trabajo.titulo);
           const urlTrabajo = `${window.location.origin}/trabajo/${trabajo.id}/${slug}`;
 
           return (
-            /* Clase dinámica trabajo-card--destacado */
-            <article 
-              className={`trabajo-card ${trabajo.destacado ? 'trabajo-card--destacado' : ''}`} 
+            <article
+              className={`trabajo-card ${trabajo.destacado ? "trabajo-card--destacado" : ""}`}
               key={trabajo.id}
             >
               <div className="trabajo-card__content">
-                
                 {/* Etiqueta visual para destacados */}
                 {trabajo.destacado && (
                   <span className="badge-destacado">🔥 Oferta Destacada</span>
@@ -134,8 +158,13 @@ const Trabajos = () => {
                 <h3>{trabajo.titulo}</h3>
 
                 <div className="trabajo-card__info">
-                  <span><MapPin size={16} color="#3b82f6" /> {trabajo.ubicacion}</span>
-                  <span><DollarSign size={16} color="#22c55e" /> {trabajo.sueldo?.toLocaleString('es-CL')}</span>
+                  <span>
+                    <MapPin size={16} color="#3b82f6" /> {trabajo.ubicacion}
+                  </span>
+                  <span>
+                    <DollarSign size={16} color="#22c55e" />{" "}
+                    {trabajo.sueldo?.toLocaleString("es-CL")}
+                  </span>
                 </div>
 
                 <p className="trabajo-card__description">
@@ -152,12 +181,12 @@ const Trabajos = () => {
                 <div className="trabajo-card__public-links">
                   <a
                     href={`https://wa.me/${trabajo.contacto_whatsapp}?text=${encodeURIComponent(
-                      `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`
+                      `Hola! Me interesa la vacante de ${trabajo.titulo}.\n\nLink: ${urlTrabajo}`,
                     )}`}
                     target="_blank"
                     rel="noreferrer"
                     className="btn-public btn--whatsapp"
-                    onClick={()=> trackWhatsAppClick(trabajo.titulo)}
+                    onClick={() => trackWhatsAppClick(trabajo.titulo)}
                   >
                     <MessageCircle size={18} /> WhatsApp
                   </a>
@@ -177,10 +206,16 @@ const Trabajos = () => {
 
               {usuario?.role === "admin" && (
                 <div className="trabajo-card__actions">
-                  <button className="btn-admin btn--edit" onClick={() => handleEditar(trabajo.id)}>
+                  <button
+                    className="btn-admin btn--edit"
+                    onClick={() => handleEditar(trabajo.id)}
+                  >
                     <Pencil size={16} />
                   </button>
-                  <button className="btn-admin btn--delete" onClick={() => handleEliminar(trabajo.id)}>
+                  <button
+                    className="btn-admin btn--delete"
+                    onClick={() => handleEliminar(trabajo.id)}
+                  >
                     <Trash2 size={16} />
                   </button>
                 </div>

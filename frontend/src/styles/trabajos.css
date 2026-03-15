@@ -25,17 +25,21 @@ body {
   letter-spacing: -1px;
 }
 
-/* --- BUSCADOR --- */
+/* --- CONTENEDOR DE BÚSQUEDA Y FILTRO --- */
 .search-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 12px; /* Espacio entre buscador y botón */
   margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 500px;
+  flex: 1; /* El buscador ocupa el espacio sobrante */
   display: flex;
   align-items: center;
 }
@@ -43,7 +47,7 @@ body {
 .search-icon {
   position: absolute;
   left: 15px;
-  color: var(--text-muted); /* Adaptable */
+  color: var(--text-muted);
   pointer-events: none;
 }
 
@@ -56,11 +60,44 @@ body {
   color: var(--text-main);
   outline: none;
   transition: all 0.3s ease;
+  height: 48px;
 }
 
 .search-input:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* --- BOTÓN DE FILTRO (NUEVO) --- */
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-card);
+  border: 2px solid #ef4444;
+  color: #ef4444;
+  padding: 0 18px;
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  background-color: rgba(239, 68, 68, 0.05);
+  transform: translateY(-2px);
+}
+
+.filter-btn--active {
+  background-color: #ef4444;
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.filter-btn-text {
+  font-size: 0.9rem;
 }
 
 /* --- GRID --- */
@@ -79,7 +116,8 @@ body {
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
-  position: relative; /* Para posibles badges absolutos */
+  position: relative;
+  overflow: hidden; /* Importante para el rayo de luz */
 }
 
 .trabajo-card:hover {
@@ -88,16 +126,41 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
 }
 
-/* ESTILOS PARA TRABAJO DESTACADO */
+/* --- ESTILOS PARA TRABAJO DESTACADO --- */
 .trabajo-card--destacado {
-  border: 2px solid #ef4444 !important; /* Borde rojo */
-  background-color: rgba(239, 68, 68, 0.03); /* Fondo rojizo muy suave */
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
+  border: 2px solid #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.02);
+  animation: latido-rojo 2s infinite;
 }
 
 .trabajo-card--destacado:hover {
   border-color: #dc2626;
-  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+}
+
+/* Efecto Rayo de Luz */
+.trabajo-card--destacado::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(30deg);
+  pointer-events: none;
+  animation: rayo-luz 4s infinite;
+}
+
+@keyframes latido-rojo {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes rayo-luz {
+  0% { left: -60%; }
+  20% { left: 120%; }
+  100% { left: 120%; }
 }
 
 .badge-destacado {
@@ -116,6 +179,7 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* --- INFORMACIÓN DE TARJETA --- */
 .trabajo-card__info {
   display: flex;
   gap: 10px;
@@ -208,10 +272,7 @@ body {
   border: 1px solid #3b82f6;
 }
 
-.btn--edit:hover {
-  background-color: #3b82f6;
-  color: white;
-}
+.btn--edit:hover { background-color: #3b82f6; color: white; }
 
 .btn--delete {
   background-color: var(--bg-home);
@@ -219,10 +280,7 @@ body {
   border: 1px solid #ef4444;
 }
 
-.btn--delete:hover {
-  background-color: #ef4444;
-  color: white;
-}
+.btn--delete:hover { background-color: #ef4444; color: white; }
 
 /* --- BOTÓN VER MÁS --- */
 .btn-details {
@@ -245,6 +303,8 @@ body {
 /* --- RESPONSIVIDAD --- */
 @media (max-width: 600px) {
   .trabajos__title { font-size: 1.8rem; }
+  .search-container { flex-direction: column; width: 100%; }
+  .search-wrapper, .filter-btn { width: 100%; }
   .trabajo-card__public-links { flex-direction: column; }
   .trabajo-card__info { flex-direction: column; gap: 5px; }
   .trabajo-card--destacado { transform: none; }
