@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/terminos.css"; // Un CSS sencillo para darle formato
+import "../styles/terminos.css";
 
 const Terminos = () => {
     return (

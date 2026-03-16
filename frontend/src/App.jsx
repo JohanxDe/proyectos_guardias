@@ -15,6 +15,7 @@ import GlobalSpinner from "./components/GlobalSpinner";
 import CambiarClave from "./pages/CambiarClave";
 import Footer from "./components/Footer";
 import Terminos from "./pages/Terminos";
+import QuienesSomos from "./pages/QuienesSomos";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/adminRoute";
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="noticias" element={<Noticias/>}/>
         <Route path="login" element={<Login/>}/>
         <Route path="/terminos" element={<Terminos />} />
+        <Route path="/Quienes-somos" element={<QuienesSomos/>}/>
 
 
       {/*Rutas protegidas */}

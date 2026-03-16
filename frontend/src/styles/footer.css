@@ -2,7 +2,7 @@
     background-color: #020617;
     padding: 20px;
     border-top: 1px solid #1e293b;
-    margin-top: auto; /* Empuja el footer hacia abajo si el contenido es poco */
+    margin-top: auto;
 }
 
 .footer-content {
@@ -14,36 +14,55 @@
 
 .footer-nav {
     display: flex;
-    flex-direction: column; /* Por defecto uno sobre otro (móvil) */
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     margin-top: 15px;
+}
+
+.footer-links-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .footer-link {
     color: #60a5fa;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: #ffffff;
 }
 
 .footer-divider {
-    display: none; /* Se oculta en móvil */
+    color: #334155;
+    display: inline; /* Siempre visible dentro del grupo de links */
 }
 
 .footer-disclaimer {
     font-size: 0.8rem;
     max-width: 500px;
     font-style: italic;
+    line-height: 1.4;
 }
 
-/* En tablets y PC se ordena horizontal */
+/* Solo para el separador extra que aparece en PC */
+.desktop-only {
+    display: none;
+}
+
+/* --- Ajustes para Tablet y PC --- */
 @media (min-width: 768px) {
     .footer-nav {
         flex-direction: row;
         justify-content: center;
+        gap: 20px;
     }
-    .footer-divider {
+
+    .desktop-only {
         display: inline;
-        color: #334155;
     }
 }
