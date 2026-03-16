@@ -11,8 +11,7 @@ exports.obtenerTrabajos = async (req, res) => {
     }
 }
 
-// 2. Crear trabajo (Versión final con notificación por correo)
-// 2. Crear trabajo (CON DEBUG ESTRATÉGICO)
+// 2. Crear trabajo
 exports.crearTrabajo = async (req, res) => {
     const fechaAhora = new Date().toLocaleString('es-CL', {
         dateStyle: 'long',
@@ -20,12 +19,6 @@ exports.crearTrabajo = async (req, res) => {
     });
 
     try {
-        // --- DEBUG 1: Ver qué llega al servidor desde el Frontend ---
-        console.log("================ DEBUG BACKEND ================");
-        console.log("1. BODY COMPLETO:", JSON.stringify(req.body, null, 2));
-        console.log("2. VALOR DE 'DESTACADO':", req.body.destacado);
-        console.log("3. TIPO DE DATO:", typeof req.body.destacado);
-
         // 🔐 validación de rol
         if (!req.usuario || req.usuario.role !== "admin") {
             console.log("❌ ERROR: Usuario no es admin");
@@ -46,12 +39,8 @@ exports.crearTrabajo = async (req, res) => {
             return res.status(400).json({ error: "El título y la descripción son obligatorios" });
         }
 
-        // --- DEBUG 2: Asegurar el booleano antes de la DB ---
         // Esto convierte "true" (string) o true (booleano) en un booleano real de JS
         const valorParaDB = destacado === true || destacado === "true";
-        console.log("4. VALOR FINAL QUE ENTRARÁ A LA QUERY:", valorParaDB);
-        console.log("===============================================");
-
         // Guardar en la DB
         const nuevo = await pool.query(
             `INSERT INTO trabajos (
@@ -76,11 +65,11 @@ exports.crearTrabajo = async (req, res) => {
                 longitud || null, 
                 imagen_url || null, 
                 contacto_whatsapp || '+56956795637', 
-                valorParaDB // Aquí enviamos el valor que debugueamos
+                valorParaDB
             ]
         );
 
-        // ✅ ENVIAR CORREO DE NOTIFICACIÓN
+        //  ENVIAR CORREO DE NOTIFICACIÓN
         try {
             await enviarNotificacionNuevoTrabajo(
                 adminNombre,

@@ -39,6 +39,13 @@ const Perfil = () => {
   };
 
   const toggleDestacado = async (id, estadoActual) => {
+    const estadoNuevo = !estadoActual;
+  
+  setTrabajos(prevTrabajos => 
+    prevTrabajos.map((t) =>
+      t.id === id ? { ...t, destacado: estadoNuevo } : t
+    )
+  );
     try {
       const response = await fetch(`${API_ENDPOINTS.TRABAJOS}/${id}`, {
         method: "PUT",
@@ -46,13 +53,13 @@ const Perfil = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ destacado: !estadoActual }),
+        body: JSON.stringify({ destacado: estadoNuevo }),
       });
 
       if (response.ok) {
         setTrabajos(
           trabajos.map((t) =>
-            t.id === id ? { ...t, destacado: !estadoActual } : t,
+            t.id === id ? { ...t, destacado: estadoActual } : t,
           ),
         );
       }
