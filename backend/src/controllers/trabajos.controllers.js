@@ -4,7 +4,16 @@ const { enviarNotificacionNuevoTrabajo } = require("../utils/mailer");
 // 1. Obtener todos los trabajos
 exports.obtenerTrabajos = async (req, res) => {
     try {
-        const result = await pool.query("SELECT *, TO_CHAR(fecha_publicacion, 'DD-MM-YY') as fecha_formateada FROM trabajos ORDER BY destacado DESC, id DESC")
+        const soloActivos = req.usuario?.role === "admin" ? "" : "WHERE activo = true"
+
+        const query = `
+        SELECT *, TO_CHAR(fecha_publicacion, 'DD-MM-YY')AS fecha_formateada
+        FROM trabajos
+        ${soloActivos}
+        ORDER BY destacado DESC, id DESC
+        `;
+
+        const result = await pool.query(query);
         res.json(result.rows)
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -38,8 +47,6 @@ exports.crearTrabajo = async (req, res) => {
             console.log("❌ ERROR: Faltan campos obligatorios");
             return res.status(400).json({ error: "El título y la descripción son obligatorios" });
         }
-
-        // Esto convierte "true" (string) o true (booleano) en un booleano real de JS
         const valorParaDB = destacado === true || destacado === "true";
         // Guardar en la DB
         const nuevo = await pool.query(
@@ -52,9 +59,10 @@ exports.crearTrabajo = async (req, res) => {
                 longitud, 
                 imagen_url, 
                 contacto_whatsapp, 
-                destacado
+                destacado,
+                activo
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING *`,
             [
                 titulo, 
@@ -65,7 +73,8 @@ exports.crearTrabajo = async (req, res) => {
                 longitud || null, 
                 imagen_url || null, 
                 contacto_whatsapp || '+56956795637', 
-                valorParaDB
+                valorParaDB,
+                activo || true
             ]
         );
 
@@ -119,7 +128,7 @@ exports.obtenerTrabajoPorId = async (req, res) => {
 exports.editarTrabajo = async (req, res) => {
     try {
         const { id } = req.params;
-        const { titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp, destacado } = req.body
+        const { titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp, destacado, activo } = req.body
 
         if (req.usuario.role !== "admin") {
             return res.status(403).json({ error: "Acceso denegado" });
@@ -127,9 +136,9 @@ exports.editarTrabajo = async (req, res) => {
 
         const actualizado = await pool.query(
             `UPDATE trabajos
-            SET titulo = $1, descripcion = $2, sueldo = $3, ubicacion = $4, latitud = $5, longitud = $6, imagen_url = $7, contacto_whatsapp = $8, destacado = $9
-            WHERE id = $10 RETURNING *`,
-            [titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp, destacado, id]
+            SET titulo = $1, descripcion = $2, sueldo = $3, ubicacion = $4, latitud = $5, longitud = $6, imagen_url = $7, contacto_whatsapp = $8, destacado = $9, activo = $10
+            WHERE id = $11 RETURNING *`,
+            [titulo, descripcion, sueldo, ubicacion, latitud, longitud, imagen_url, contacto_whatsapp, destacado, activo, id]
         );
 
         res.json({
@@ -174,3 +183,30 @@ exports.incrementarVisita = async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor" })
     }
 }
+
+//7. Cambiar visibilidad
+exports.cambiarVisibilidad = async(req, res) =>{
+    const {id} = req.params;
+    const {activo} = req.body
+
+    try{
+        if(req.usuario.role !== "admin"){
+            return res.status(403).json({error: "Acceso denegado"})
+        }
+
+        const result = await pool.query(
+            "UPDATE trabajos SET activo = $1 WHERE id = $2 RETURNING *",
+            [activo, id]
+        );
+        if(result.rowCount === 0){
+            return res.status(404).json({error: "Trabajo no encontrado"})
+        }
+
+        res.json({
+            message: activo ? "Oferta publicada" : "Oferta ocultada",
+            trabajo: result.rows[0]
+        });
+    }catch(error){
+        res.status(500).json({error: error.message})
+    }
+};

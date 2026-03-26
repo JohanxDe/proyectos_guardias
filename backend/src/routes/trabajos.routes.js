@@ -7,7 +7,8 @@ const{
     obtenerTrabajoPorId,
     editarTrabajo,
     eliminarTrabajo,
-    incrementarVisita
+    incrementarVisita,
+    cambiarVisibilidad
 } = require("../controllers/trabajos.controllers");
 
 const verificarToken = require("../middleware/verificarToken");
@@ -22,5 +23,6 @@ router.post("/", verificarToken ,crearTrabajo);
 router.put("/:id", verificarToken ,editarTrabajo);
 router.delete("/:id", verificarToken ,eliminarTrabajo);
 router.post("/:id/visita", incrementarVisita)
+router.patch("/:id/visibilidad", verificarToken, cambiarVisibilidad)
 
 module.exports = router;
