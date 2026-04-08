@@ -40,14 +40,15 @@ exports.crearTrabajo = async (req, res) => {
 
         const {
             titulo, descripcion, sueldo, ubicacion,
-            latitud, longitud, imagen_url, contacto_whatsapp, destacado
+            latitud, longitud, imagen_url, contacto_whatsapp, destacado, activo
         } = req.body;
 
         if (!titulo || !descripcion) {
             console.log("❌ ERROR: Faltan campos obligatorios");
             return res.status(400).json({ error: "El título y la descripción son obligatorios" });
         }
-        const valorParaDB = destacado === true || destacado === "true";
+        const valorDestacado = destacado === true || destacado === "true";
+        const valorActivo = activo === undefined ? true : (activo === true || activo === "true");
         // Guardar en la DB
         const nuevo = await pool.query(
             `INSERT INTO trabajos (
@@ -73,8 +74,8 @@ exports.crearTrabajo = async (req, res) => {
                 longitud || null, 
                 imagen_url || null, 
                 contacto_whatsapp || '+56956795637', 
-                valorParaDB,
-                activo || true
+                valorDestacado,
+                valorActivo || true
             ]
         );
 
