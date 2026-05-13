@@ -24,6 +24,22 @@
   <meta name="apple-mobile-web-app-title" content="JG Service">
   <link rel="apple-touch-icon" href="/logoSinF.png">
   <meta name="theme-color" content="#0f172a" />
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="es">
+  <meta name="revisit-after" content="7 days">
+
+  <!-- Open Graph para Twitter/X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JG Service - Ofertas de Trabajo para Guardias">
+  <meta name="twitter:description" content="Únete a nuestro equipo de seguridad. Postulaciones abiertas para guardias con y sin curso OS10.">
+  <meta name="twitter:image" content="https://jgservice.cl/logoSinF.png">
+
+  <!-- Preconnect para mejorar performance -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C36C4M6YDQ"></script>
   <script>
@@ -54,17 +70,24 @@
 
 
 <body>
+  <noscript>
+    <p>Esta aplicación requiere JavaScript habilitado para funcionar correctamente.</p>
+  </noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker registrado', reg))
-        .catch(err => console.log('Error al registrar SW', err));
-    });
-  }
-</script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => {
+            console.log('✓ Service Worker registrado', reg);
+          })
+          .catch(err => {
+            console.warn('⚠ Error al registrar Service Worker:', err);
+          });
+      });
+    }
+  </script>
 </body>
 
 </html>
