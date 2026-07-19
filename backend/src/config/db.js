@@ -4,10 +4,7 @@ const dotenv = require ('dotenv')
 dotenv.config();
 
 const pool = new Pool({
-   connectionString: process.env.DATABASE_URL,
-   ssl:{
-    rejectUnauthorized: false
-   }
+   connectionString: process.env.DATABASE_URL || 'postgresql://johan:johan0204@127.0.0.1:5432/GGSSguardias'
 });
 
 pool.on('error', (err) => {
